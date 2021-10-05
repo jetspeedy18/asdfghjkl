@@ -16,5 +16,4 @@ massive transitions
 
 ## Mr. Britton is the final boss
   boss fight is him making a PB and J
-  win by getting "stack overflow: I am too fat"
   end credits
