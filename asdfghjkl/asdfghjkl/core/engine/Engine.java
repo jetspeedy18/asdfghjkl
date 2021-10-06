@@ -1,4 +1,4 @@
-package asdfghjkl.core.engine;
+package core.engine;
 
 public class Engine {
 

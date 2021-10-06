@@ -1,6 +1,6 @@
-package asdfghjkl.core;
+package core;
 
-import asdfghjkl.core.engine.Engine;
+import core.engine.Engine;
 
 public class Core {
 
