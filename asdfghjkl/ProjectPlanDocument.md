@@ -1,6 +1,6 @@
 # Plan
 
-#Specific things that need to happen for each level
+## Specific things that need to happen for each level
 Bosses need to be decided
 Items that can be picked up
 Puzzles
@@ -15,4 +15,4 @@ Layout
 
 ## Level 4
 
-# #Level 5
+## Level 5
