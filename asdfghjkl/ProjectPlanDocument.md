@@ -1,4 +1,4 @@
-##Plan
+# Plan
 
 #Specific things that need to happen for each level
 Bosses need to be decided
@@ -7,12 +7,12 @@ Puzzles
 Enemies
 Layout
 
-#Level 1 (tutorial)
+## Level 1 (tutorial)
 
-#Level 2
+## Level 2
 
-#Level 3
+## Level 3
 
-#Level 4
+## Level 4
 
-#Level 5
+# #Level 5
