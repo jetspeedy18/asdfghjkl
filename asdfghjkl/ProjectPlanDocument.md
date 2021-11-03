@@ -1,5 +1,17 @@
 # Plan
 
+
+
+Week 11/1/21-11/5/21:
+
+Project Manager: Nam
+
+Tech Lead: Brendan
+
+Deign Lead: Marlyn
+
+
+
 ## Specific things that need to happen for each level
 Bosses need to be decided,
 
