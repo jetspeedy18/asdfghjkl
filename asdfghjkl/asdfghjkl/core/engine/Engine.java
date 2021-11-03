@@ -1,12 +1,17 @@
 package core.engine;
 
+import java.util.Random;
+import static org.lwjgl.opengl.GL11.*;
+
 public class Engine implements Runnable {
 
 	private Window window;
 	
+	private Random r;
+	
 	public Engine(){
 		window = new Window();
-		
+		r = new Random();
 		run();
 	}
 	
@@ -37,11 +42,11 @@ public class Engine implements Runnable {
 	}
 	
 	private void tick(){
-		// update things
+		glClearColor(r.nextFloat(), r.nextFloat(), r.nextFloat(), 0.0f);
 	}
 	
 	private void render(){
-		// render things
+		window.render();
 	}
 	
 }
