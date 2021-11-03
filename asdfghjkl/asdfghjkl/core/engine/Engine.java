@@ -5,7 +5,7 @@ public class Engine implements Runnable {
 	private Window window;
 	
 	public Engine(){
-		Window window = new Window();
+		window = new Window();
 		
 		run();
 	}
@@ -17,7 +17,7 @@ public class Engine implements Runnable {
 		double ns = 1000000000 / amountOfTicks;
 		double delta = 0;
 		//	int frames = 0;
-		while(window.isRunning()) {
+		while(!window.shouldClose()) {
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
@@ -26,14 +26,14 @@ public class Engine implements Runnable {
 				tick();
 				delta--;
 			}
-			if(window.isRunning())
+			if(!window.shouldClose())
 				render();
 		//	frames++;
 		}
 	}
 	
 	private void pollInputs(){
-		
+		window.poll();
 	}
 	
 	private void tick(){
