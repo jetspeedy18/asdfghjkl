@@ -4,7 +4,7 @@ import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.opengl.GL11.*;
-
+import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
@@ -33,14 +33,14 @@ public class Window {
 			});
 			
 			glfwMakeContextCurrent(window);
-			
-			GLFW.glfwSwapInterval(1);
-			
 			GL.createCapabilities();
+			
+			glfwSwapInterval(1);
 			
 			glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
 			
-			glfwShowWindow(window);
+			glfwShowWindow(window);			
+
 			
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -52,13 +52,22 @@ public class Window {
 	}
 	
 	public void render(){
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
 		glfwSwapBuffers(window);
 	}
 	
 	public boolean shouldClose() {
 		return glfwWindowShouldClose(window);
 	}
+	
+	public void close(){
+		glfwFreeCallbacks(window);
+		glfwDestroyWindow(window);
+				
+		glfwTerminate();	
+	}
 
+	
+	public long getWindow(){
+		return window;
+	}
 }
