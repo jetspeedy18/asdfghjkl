@@ -5,10 +5,9 @@ import org.lwjgl.system.MemoryUtil;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-import static org.lwjgl.opengl.GL11.GL_FLOAT;
-import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL15.GL_ELEMENT_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL15.glBindBuffer;
 import static org.lwjgl.opengl.GL15.glBufferData;
 import static org.lwjgl.opengl.GL15.glDeleteBuffers;
@@ -26,38 +25,41 @@ public class Mesh {
 
     private final int posVboId;
 
-    private final int colourVboId;
+    private final int texCoordVboId;
 
     private final int idxVboId;
 
     private final int vertexCount;
     
-    private static final float[] positions = new float[]{
+    private final Texture texture;
+    
+    private static final float[] position = new float[]{
             -0.5f,  0.5f, 0.0f,
             -0.5f, -0.5f, 0.0f,
              0.5f, -0.5f, 0.0f,
-             0.5f,  0.5f, 0.0f,
+             0.5f,  0.5f, 0.0f
         };
-    private static final float[] colours = new float[]{
-            0.5f, 0.0f, 0.0f,
-            0.0f, 0.5f, 0.0f,
-            0.0f, 0.0f, 0.5f,
-            0.0f, 0.5f, 0.5f,
+    private static final float[] textureCoord = new float[]{
+    		0.0f, 0.0f,
+    		0.0f, 1.0f,
+    		1.0f, 1.0f,
+    		1.0f, 0.0f
         };
-    private static final int[] indices = new int[]{
+    private static final int[] indice = new int[]{
             0, 1, 3, 3, 1, 2,
         };
     
-    public Mesh(){
-    	this(positions, colours, indices);
+    public Mesh(Texture texture){
+    	this(position, textureCoord, indice, texture);
     }
     
 
-    public Mesh(float[] positions, float[] colours, int[] indices) {
+    public Mesh(float[] positions, float[] textureCoords, int[] indices, Texture texture) {
         FloatBuffer posBuffer = null;
-        FloatBuffer colourBuffer = null;
+        FloatBuffer textCoordBuffer = null;
         IntBuffer indicesBuffer = null;
         try {
+        	this.texture = texture;
             vertexCount = indices.length;
 
             vaoId = glGenVertexArrays();
@@ -72,14 +74,15 @@ public class Mesh {
             glEnableVertexAttribArray(0);
             glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
 
-            // Colour VBO
-            colourVboId = glGenBuffers();
-            colourBuffer = MemoryUtil.memAllocFloat(colours.length);
-            colourBuffer.put(colours).flip();
-            glBindBuffer(GL_ARRAY_BUFFER, colourVboId);
-            glBufferData(GL_ARRAY_BUFFER, colourBuffer, GL_STATIC_DRAW);
+            // tex VBO
+            texCoordVboId = glGenBuffers();
+            textCoordBuffer = MemoryUtil.memAllocFloat(textureCoords.length);
+            textCoordBuffer.put(textureCoords).flip();
+            System.out.println(texCoordVboId);
+            glBindBuffer(GL_ARRAY_BUFFER, texCoordVboId);
+            glBufferData(GL_ARRAY_BUFFER, textCoordBuffer, GL_STATIC_DRAW);
             glEnableVertexAttribArray(1);
-            glVertexAttribPointer(1, 3, GL_FLOAT, false, 0, 0);
+            glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, 0);
 
             // Index VBO
             idxVboId = glGenBuffers();
@@ -94,8 +97,8 @@ public class Mesh {
             if (posBuffer != null) {
                 MemoryUtil.memFree(posBuffer);
             }
-            if (colourBuffer != null) {
-                MemoryUtil.memFree(colourBuffer);
+            if (textCoordBuffer != null) {
+                MemoryUtil.memFree(textCoordBuffer);
             }
             if (indicesBuffer != null) {
                 MemoryUtil.memFree(indicesBuffer);
@@ -110,6 +113,18 @@ public class Mesh {
     public int getVertexCount() {
         return vertexCount;
     }
+    
+    public void render(){
+ 
+    	glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, getTextureId());
+		
+		glBindVertexArray(getVaoId());
+		glEnableVertexAttribArray(0);
+		glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
+		glDisableVertexAttribArray(0);
+		glBindVertexArray(0);
+    }
 
     public void cleanUp() {
         glDisableVertexAttribArray(0);
@@ -117,11 +132,18 @@ public class Mesh {
         // Delete the VBOs
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glDeleteBuffers(posVboId);
-        glDeleteBuffers(colourVboId);
+        glDeleteBuffers(texCoordVboId);
         glDeleteBuffers(idxVboId);
+        
+        texture.cleanup();
 
         // Delete the VAO
         glBindVertexArray(0);
         glDeleteVertexArrays(vaoId);
     }
+    
+    public int getTextureId(){
+    	return texture.getId();
+    }
+    
 }

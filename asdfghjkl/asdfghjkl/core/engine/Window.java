@@ -11,8 +11,11 @@ import static org.lwjgl.system.MemoryUtil.*;
 public class Window {
 	
 	private long window;
+	
+	private boolean paused;
 
 	public Window(){
+		paused = false;
 		try{
 			if(!glfwInit()){
 				throw new Exception("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
@@ -30,6 +33,8 @@ public class Window {
 			glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
 				if(key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE)
 					glfwSetWindowShouldClose(window, true);
+				if(key == GLFW_KEY_K && action == GLFW_RELEASE)
+					paused = !paused;
 			});
 			
 			glfwMakeContextCurrent(window);
@@ -63,11 +68,17 @@ public class Window {
 		glfwFreeCallbacks(window);
 		glfwDestroyWindow(window);
 				
-		glfwTerminate();	
+		glfwTerminate();
+		
+		System.exit(42);
 	}
 
 	
 	public long getWindow(){
 		return window;
+	}
+
+	public boolean isPaused() {
+		return paused;
 	}
 }

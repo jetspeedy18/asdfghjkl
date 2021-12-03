@@ -4,9 +4,12 @@ import java.util.Random;
 
 import core.game.Menu;
 import core.game.Mesh;
+import core.game.Renderer;
 import core.game.Screen;
+import core.game.Texture;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.*;
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
@@ -21,10 +24,17 @@ public class Engine implements Runnable {
 	
 	private Screen screen;
 	
+	private Renderer renderer;
+	
 	public Engine(){
 		window = new Window();
 		screen = new Menu(this);
-		//player = new Mesh();
+		try {
+			renderer = new Renderer();
+			player = new Mesh(new Texture(Texture.loadTex("res/images/test.jpg")));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		r = new Random();
 		run();
 	}
@@ -44,7 +54,7 @@ public class Engine implements Runnable {
 				lastTime = now;
 				pollInputs();
 				while(delta >= 1) {
-					tick();
+					if(!window.isPaused()) tick();
 					delta--;
 				}
 				if(!window.shouldClose())
@@ -69,20 +79,23 @@ public class Engine implements Runnable {
 	private void render(){
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
+		renderer.bind();
+		
 		screen.render();
 		
-		glBindVertexArray(player.getVaoId());
-		glEnableVertexAttribArray(0);
-		glDrawElements(GL_TRIANGLES, player.getVertexCount(), GL_UNSIGNED_INT, 0);
-		glDisableVertexAttribArray(0);
-		glBindVertexArray(0);
+		renderer.render();
+		
+		player.render();
+		
+		renderer.unbind();
 		
 		window.render();
 
 	}
 	
 	public void changeScreens(){
-		
+		//TODO
 	}
-	
+		
 }
