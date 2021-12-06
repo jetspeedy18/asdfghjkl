@@ -14,6 +14,8 @@ public class Player extends GameItem {
 	
 	public void tick(){
 		rot += 0.1;
+		scale += 0.01;
+		x+=0.5;
 	}
 	
 }

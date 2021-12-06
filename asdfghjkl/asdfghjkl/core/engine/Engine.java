@@ -5,11 +5,8 @@ import java.util.Random;
 import core.game.Camera;
 import core.game.ItemHandler;
 import core.game.Menu;
-import core.game.Mesh;
-import core.game.Player;
 import core.game.Renderer;
 import core.game.Screen;
-import core.game.Texture;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -21,28 +18,32 @@ public class Engine implements Runnable {
 	
 	private Camera camera;
 	
-	private ItemHandler handler = new ItemHandler();
+	private ItemHandler handler;
 	
 	private Screen screen;
 	
 	private Renderer renderer;
 	
-	private Player player;
-	
 	public Engine(){
-		camera = new Camera();
-		window = new Window(camera);
+		window = new Window();
 		screen = new Menu(this);
+		
+		r = new Random();
+		createNewGame();
+		run();
+	}
+
+	
+	private void createNewGame(){
+		camera = new Camera();
+		handler = new ItemHandler();
 		try {
 			renderer = new Renderer(camera, handler);
-			player = new Player(new Mesh(new Texture(Texture.loadTex("res/images/test.jpg"))));
-			handler.addItem(player);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		r = new Random();
-		run();
+		}		
+		window.setWindowRes(camera);
 	}
 	
 	@Override
@@ -61,10 +62,14 @@ public class Engine implements Runnable {
 				pollInputs();
 				while(delta >= 1) {
 					if(!window.isPaused()) tick();
+					else Screen.getPause().tick();
 					delta--;
 				}
-				if(!window.shouldClose())
-					render();
+				if(!window.shouldClose()){
+					if(!window.isPaused()) render();
+					else Screen.getPause().render();
+					window.render();
+				}
 		//	frames++;
 			}
 		} finally {
@@ -80,7 +85,7 @@ public class Engine implements Runnable {
 	private void tick(){
 		glClearColor(r.nextFloat(), r.nextFloat(), r.nextFloat(), 0.0f);
 		screen.tick();
-		player.tick();
+		handler.tick();
 	}
 	
 	private void render(){
@@ -94,8 +99,6 @@ public class Engine implements Runnable {
 		renderer.render();
 		
 		renderer.unbind();
-		
-		window.render();
 
 	}
 	

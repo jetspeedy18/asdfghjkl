@@ -9,13 +9,15 @@ import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
+import java.nio.IntBuffer;
+
 public class Window {
 	
 	private long window;
 	
 	private boolean paused;
 
-	public Window(Camera camera){
+	public Window(){
 		paused = false;
 		try{
 			if(!glfwInit()){
@@ -38,14 +40,14 @@ public class Window {
 			});
 			
 			glfwSetWindowSizeCallback(window, (window, w, h) -> {
-				camera.updateScreenRes(w, h);
+				//camera.updateScreenRes(w, h);
+				// TODO: INSTALL THE VOID
 				glViewport(0, 0, w, h);
 			});
 			
 			glfwMakeContextCurrent(window);
 			GL.createCapabilities();
 			
-			camera.updateScreenRes(1920, 1080);
 			glViewport(0, 0, 1920, 1080);
 						
 			glfwSwapInterval(1);
@@ -88,5 +90,12 @@ public class Window {
 
 	public boolean isPaused() {
 		return paused;
+	}
+	
+	public void setWindowRes(Camera camera){
+		IntBuffer x = memAllocInt(4);
+		IntBuffer y = memAllocInt(4);
+		glfwGetWindowSize(window, x, y);
+		camera.updateScreenRes(x.get(), y.get());
 	}
 }

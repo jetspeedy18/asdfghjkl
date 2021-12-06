@@ -41,10 +41,7 @@ public class Renderer {
 		
 		program.setUniform("proj", camera.getCameraPos());
 		
-		for(GameItem item : handler.getItems()){
-			program.setUniform("trans", item.getPosMat());
-			item.getMesh().render();
-		}
+		handler.render(program);
 	}
 	
 	public void unbind(){

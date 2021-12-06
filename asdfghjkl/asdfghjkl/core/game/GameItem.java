@@ -15,6 +15,8 @@ public abstract class GameItem {
 	public Mesh getMesh(){
 		return mesh;
 	}
+
+	public abstract void tick();
 	
 	public Matrix4f getPosMat(){
 		return new Matrix4f().identity().translate(new Vector3f(x, y, 0)).rotateZ((float)Math.toRadians(rot)).scale(scale);

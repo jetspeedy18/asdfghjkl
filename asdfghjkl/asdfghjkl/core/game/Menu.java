@@ -3,8 +3,8 @@ package core.game;
 import core.engine.Engine;
 import core.engine.Window;
 
-public class Menu implements Screen {
-
+public class Menu extends Screen {
+	
 	public Engine engine;
 	
 	public Menu(Engine engine){
