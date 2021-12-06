@@ -6,6 +6,9 @@ import static org.lwjgl.opengl.GL20.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.joml.Matrix4f;
+import org.lwjgl.system.MemoryStack;
+
 public class ShaderLoader {
 
 	private final int programId;
@@ -36,6 +39,12 @@ public class ShaderLoader {
 		glUniform1i(uniforms.get(name), value);
 	}
 	
+	public void setUniform(String name, Matrix4f value) {
+		try(MemoryStack stack = MemoryStack.stackPush()){
+			glUniformMatrix4fv(uniforms.get(name), false, value.get(stack.mallocFloat(16)));
+		}
+	}
+	
 	public void bind(){
 		glUseProgram(programId);
 	}
@@ -51,6 +60,7 @@ public class ShaderLoader {
 		
 		glShaderSource(shaderId, code);
 		glCompileShader(shaderId);
+		if(glGetShaderi(shaderId, GL_COMPILE_STATUS) == 0) throw new Exception("Couldn´t Complielefmkedmsl" + glGetShaderInfoLog(shaderId));
 		
 		glAttachShader(programId, shaderId);
 		
@@ -70,4 +80,4 @@ public class ShaderLoader {
 		if(programId != 0) glDeleteProgram(programId);
 	}
 	
-}
+};

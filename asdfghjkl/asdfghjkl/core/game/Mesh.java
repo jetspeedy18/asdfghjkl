@@ -34,10 +34,10 @@ public class Mesh {
     private final Texture texture;
     
     private static final float[] position = new float[]{
-            -0.5f,  0.5f, 0.0f,
-            -0.5f, -0.5f, 0.0f,
-             0.5f, -0.5f, 0.0f,
-             0.5f,  0.5f, 0.0f
+            -32f,  32f, 0.0f,
+            -32f, -32f, 0.0f,
+             32f, -32f, 0.0f,
+             32f,  32f, 0.0f
         };
     private static final float[] textureCoord = new float[]{
     		0.0f, 0.0f,
@@ -78,7 +78,6 @@ public class Mesh {
             texCoordVboId = glGenBuffers();
             textCoordBuffer = MemoryUtil.memAllocFloat(textureCoords.length);
             textCoordBuffer.put(textureCoords).flip();
-            System.out.println(texCoordVboId);
             glBindBuffer(GL_ARRAY_BUFFER, texCoordVboId);
             glBufferData(GL_ARRAY_BUFFER, textCoordBuffer, GL_STATIC_DRAW);
             glEnableVertexAttribArray(1);

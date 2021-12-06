@@ -8,7 +8,13 @@ public class Renderer {
 	
 	private ShaderLoader program;
 	
-	public Renderer(){
+	private ItemHandler handler;
+	
+	private Camera camera;
+	
+	public Renderer(Camera camera, ItemHandler handler){
+		this.handler = handler;
+		this.camera = camera;
 		try{
 			program = new ShaderLoader(ShaderLoader.createShaderLoader());
 			
@@ -17,7 +23,9 @@ public class Renderer {
 			
 			program.link();
 			
-			//program.createUniform("texture_sampler");
+			program.createUniform("texture_sampler");
+			program.createUniform("trans");
+			program.createUniform("proj");
 			
 		}catch (Exception e){
 			e.printStackTrace();
@@ -29,7 +37,14 @@ public class Renderer {
 	}
 	
 	public void render(){
-		//program.setUniform("texture_sampler", 0);
+		program.setUniform("texture_sampler", 0);
+		
+		program.setUniform("proj", camera.getCameraPos());
+		
+		for(GameItem item : handler.getItems()){
+			program.setUniform("trans", item.getPosMat());
+			item.getMesh().render();
+		}
 	}
 	
 	public void unbind(){

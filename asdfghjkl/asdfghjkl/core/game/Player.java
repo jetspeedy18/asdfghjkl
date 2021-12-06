@@ -1,26 +1,19 @@
 package core.game;
 
-import org.joml.Vector2f;
-import static org.lwjgl.opengl.GL30.*;
 
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
+public class Player extends GameItem {
 
-public class Player {
-
-	private Vector2f pos;
-	
-	public Player(){
-		pos = new Vector2f();
+	public Player(Mesh mesh){
+		this.mesh = mesh;
+		x = 0;
+		y = 0;
+		rot = 0;
+		scale = 1;
 			
 	}
 	
 	public void tick(){
-		
-	}
-	
-	public void render(){
-		
+		rot += 0.1;
 	}
 	
 }

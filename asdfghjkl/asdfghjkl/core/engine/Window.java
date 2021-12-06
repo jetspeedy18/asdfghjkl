@@ -1,7 +1,8 @@
 package core.engine;
 
-import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.GL;
+
+import core.game.Camera;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -14,7 +15,7 @@ public class Window {
 	
 	private boolean paused;
 
-	public Window(){
+	public Window(Camera camera){
 		paused = false;
 		try{
 			if(!glfwInit()){
@@ -22,9 +23,8 @@ public class Window {
 			}
 			
 			glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-			glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 			
-			window = glfwCreateWindow(1920, 1080, "hcsfwe", GLFW.glfwGetPrimaryMonitor(), NULL);
+			window = glfwCreateWindow(1920, 1080, "hcsfwe", NULL, NULL);
 			
 			if(window == NULL){
 				throw new Exception("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
@@ -37,9 +37,17 @@ public class Window {
 					paused = !paused;
 			});
 			
+			glfwSetWindowSizeCallback(window, (window, w, h) -> {
+				camera.updateScreenRes(w, h);
+				glViewport(0, 0, w, h);
+			});
+			
 			glfwMakeContextCurrent(window);
 			GL.createCapabilities();
 			
+			camera.updateScreenRes(1920, 1080);
+			glViewport(0, 0, 1920, 1080);
+						
 			glfwSwapInterval(1);
 			
 			glClearColor(1.0f, 0.0f, 0.0f, 0.0f);

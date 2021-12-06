@@ -2,17 +2,16 @@ package core.engine;
 
 import java.util.Random;
 
+import core.game.Camera;
+import core.game.ItemHandler;
 import core.game.Menu;
 import core.game.Mesh;
+import core.game.Player;
 import core.game.Renderer;
 import core.game.Screen;
 import core.game.Texture;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL13.*;
-import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
-import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
 
 public class Engine implements Runnable {
 
@@ -20,18 +19,25 @@ public class Engine implements Runnable {
 	
 	private Random r;
 	
-	private Mesh player;
+	private Camera camera;
+	
+	private ItemHandler handler = new ItemHandler();
 	
 	private Screen screen;
 	
 	private Renderer renderer;
 	
+	private Player player;
+	
 	public Engine(){
-		window = new Window();
+		camera = new Camera();
+		window = new Window(camera);
 		screen = new Menu(this);
 		try {
-			renderer = new Renderer();
-			player = new Mesh(new Texture(Texture.loadTex("res/images/test.jpg")));
+			renderer = new Renderer(camera, handler);
+			player = new Player(new Mesh(new Texture(Texture.loadTex("res/images/test.jpg"))));
+			handler.addItem(player);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -74,6 +80,7 @@ public class Engine implements Runnable {
 	private void tick(){
 		glClearColor(r.nextFloat(), r.nextFloat(), r.nextFloat(), 0.0f);
 		screen.tick();
+		player.tick();
 	}
 	
 	private void render(){
@@ -82,11 +89,9 @@ public class Engine implements Runnable {
 		
 		renderer.bind();
 		
-		screen.render();
+		//screen.render();
 		
 		renderer.render();
-		
-		player.render();
 		
 		renderer.unbind();
 		
