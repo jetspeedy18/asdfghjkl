@@ -1,15 +1,9 @@
-package core.game;
+package core.engine.graphics.menus;
 
-import core.engine.Window;
+import core.engine.graphics.Window;
 
 public abstract class Screen {
 	// represents a state . . .level or menu
-	
-	private static Pause pause = new Pause();
-	
-	public static Pause getPause(){
-		return pause;
-	}
 	
 	public abstract void pollInputs(Window window);
 	

@@ -1,7 +1,9 @@
-package core.game;
+package core.engine.graphics;
 
 import static org.lwjgl.opengl.GL20.*;
 
+import core.engine.Camera;
+import core.engine.ItemHandler;
 import core.utils.Utils;
 
 public class Renderer {

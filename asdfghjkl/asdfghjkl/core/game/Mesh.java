@@ -2,6 +2,8 @@ package core.game;
 
 import org.lwjgl.system.MemoryUtil;
 
+import core.engine.graphics.Texture;
+
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 

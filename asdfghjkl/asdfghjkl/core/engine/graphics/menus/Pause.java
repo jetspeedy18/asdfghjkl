@@ -1,10 +1,8 @@
-package core.game;
+package core.engine.graphics.menus;
 
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.*;
 
-import core.engine.Window;
+import core.engine.graphics.Window;
 
 public class Pause extends Screen {
 
@@ -16,7 +14,6 @@ public class Pause extends Screen {
 
 	@Override
 	public void render() {
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
 	@Override

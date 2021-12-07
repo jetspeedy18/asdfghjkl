@@ -1,7 +1,11 @@
-package core.game;
+package core.engine.graphics.menus;
 
 import core.engine.Engine;
-import core.engine.Window;
+import core.engine.graphics.Window;
+import core.engine.input.MouseRecorder;
+
+import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
 
 public class Menu extends Screen {
 	
@@ -14,20 +18,19 @@ public class Menu extends Screen {
 	@Override
 	public void pollInputs(Window window) {
 		// TODO Auto-generated method stub
-		if(false){
-			engine.changeScreens();
+		if(MouseRecorder.INSTANCE.isPressed(GLFW_MOUSE_BUTTON_LEFT)){
+			engine.createNewGame();
 		}
 	}
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		
 	}
 

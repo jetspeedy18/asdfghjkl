@@ -2,11 +2,12 @@ package core.engine;
 
 import java.util.Random;
 
-import core.game.Camera;
-import core.game.ItemHandler;
-import core.game.Menu;
-import core.game.Renderer;
-import core.game.Screen;
+import core.engine.graphics.Renderer;
+import core.engine.graphics.Window;
+import core.engine.graphics.menus.Menu;
+import core.engine.graphics.menus.Pause;
+import core.engine.graphics.menus.Screen;
+import core.engine.input.KeyMap;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -24,17 +25,28 @@ public class Engine implements Runnable {
 	
 	private Renderer renderer;
 	
+	private KeyMap keys;
+	
+	private boolean isPlaying = false;
+	
 	public Engine(){
+		keys = new KeyMap();
 		window = new Window();
+		window.BindKeys(keys);
+		
 		screen = new Menu(this);
 		
 		r = new Random();
-		createNewGame();
+		
 		run();
 	}
 
 	
-	private void createNewGame(){
+	public void createNewGame(){
+		screen = new Pause();
+		
+		isPlaying = true;
+		
 		camera = new Camera();
 		handler = new ItemHandler();
 		try {
@@ -42,7 +54,7 @@ public class Engine implements Runnable {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}		
+		}
 		window.setWindowRes(camera);
 	}
 	
@@ -61,13 +73,11 @@ public class Engine implements Runnable {
 				lastTime = now;
 				pollInputs();
 				while(delta >= 1) {
-					if(!window.isPaused()) tick();
-					else Screen.getPause().tick();
+					tick();
 					delta--;
 				}
 				if(!window.shouldClose()){
-					if(!window.isPaused()) render();
-					else Screen.getPause().render();
+					render();
 					window.render();
 				}
 		//	frames++;
@@ -83,27 +93,29 @@ public class Engine implements Runnable {
 	}
 	
 	private void tick(){
-		glClearColor(r.nextFloat(), r.nextFloat(), r.nextFloat(), 0.0f);
-		screen.tick();
-		handler.tick();
+		if(!window.isPaused() && isPlaying){
+			glClearColor(r.nextFloat(), r.nextFloat(), r.nextFloat(), 0.0f);
+			handler.tick(keys);
+		} else {
+			screen.tick();
+		}
 	}
 	
 	private void render(){
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT);
 		
-		renderer.bind();
+		if(isPlaying){
+			
+			renderer.bind();
+			
+			renderer.render();
+			
+			renderer.unbind();
+		}
 		
-		//screen.render();
-		
-		renderer.render();
-		
-		renderer.unbind();
+		if(window.isPaused() || !isPlaying) screen.render();
 
-	}
-	
-	public void changeScreens(){
-		//TODO
 	}
 		
 }

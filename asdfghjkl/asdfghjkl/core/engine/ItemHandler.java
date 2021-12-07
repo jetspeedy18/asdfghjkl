@@ -1,7 +1,14 @@
-package core.game;
+package core.engine;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import core.engine.graphics.ShaderLoader;
+import core.engine.graphics.Texture;
+import core.engine.input.KeyMap;
+import core.game.GameItem;
+import core.game.Mesh;
+import core.game.Player;
 
 public class ItemHandler {
 	
@@ -26,11 +33,11 @@ public class ItemHandler {
 		return items;
 	}
 	
-	public void tick(){
+	public void tick(KeyMap keys){
 		for(GameItem item : items){
 			item.tick();
 		}
-		player.tick();
+		player.tick(keys);
 	}
 	
 	public void render(ShaderLoader program){
