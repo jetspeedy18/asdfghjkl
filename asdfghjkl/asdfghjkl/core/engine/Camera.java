@@ -7,7 +7,7 @@ public class Camera {
 
 	private Matrix4f ortho;
 	
-	private int x, y;
+	private float x, y;
 	
 	public Camera(){
 		x = y = 0;
@@ -19,7 +19,22 @@ public class Camera {
 	}
 	
 	public Matrix4f getCameraPos() {
-		return ortho.translate(new Vector3f(x, y, 0));
+		return new Matrix4f(ortho).translate(new Vector3f(x, y, 0));
+	}
+	
+	public void tick(float px, float py, float speedFactor){
+		float lx = tick1D(-px, x);
+		float ly = tick1D(-py, y);
+		
+		x += lx;
+		y += ly;
+		
+	}
+	
+	private float tick1D(float p, float c){
+		float error = p-c;
+		
+		return error*error*error*0.00001f;
 	}
 	
 }

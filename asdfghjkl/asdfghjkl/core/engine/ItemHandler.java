@@ -33,11 +33,12 @@ public class ItemHandler {
 		return items;
 	}
 	
-	public void tick(KeyMap keys){
+	public void tick(KeyMap keys, Camera camera){
 		for(GameItem item : items){
 			item.tick();
 		}
 		player.tick(keys);
+		camera.tick(player.getX(), player.getY(), player.getMaxSpeed());
 	}
 	
 	public void render(ShaderLoader program){

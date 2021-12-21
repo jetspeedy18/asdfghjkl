@@ -17,6 +17,14 @@ public class Player extends MovableEntity {
 			
 	}
 	
+	public float getX(){
+		return x;
+	}
+	
+	public float getY(){
+		return y;
+	}
+	
 	public void tick(KeyMap keys){
 		double inx = 0;
 		double iny = 0;
@@ -39,6 +47,10 @@ public class Player extends MovableEntity {
 		
 		x += inx * speedFactor;
 		y += iny * speedFactor;
+	}
+	
+	public float getMaxSpeed(){
+		return speedFactor;
 	}
 	
 }

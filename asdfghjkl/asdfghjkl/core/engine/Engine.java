@@ -8,6 +8,7 @@ import core.engine.graphics.menus.Menu;
 import core.engine.graphics.menus.Pause;
 import core.engine.graphics.menus.Screen;
 import core.engine.input.KeyMap;
+import core.levels.level1.Level1;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -43,7 +44,7 @@ public class Engine implements Runnable {
 
 	
 	public void createNewGame(){
-		screen = new Pause();
+		screen = new Level1(handler);
 		
 		isPlaying = true;
 		
@@ -95,7 +96,7 @@ public class Engine implements Runnable {
 	private void tick(){
 		if(!window.isPaused() && isPlaying){
 			glClearColor(r.nextFloat(), r.nextFloat(), r.nextFloat(), 0.0f);
-			handler.tick(keys);
+			handler.tick(keys, camera);
 		} else {
 			screen.tick();
 		}
@@ -104,6 +105,8 @@ public class Engine implements Runnable {
 	private void render(){
 
 		glClear(GL_COLOR_BUFFER_BIT);
+		
+		screen.render();
 		
 		if(isPlaying){
 			
@@ -114,7 +117,7 @@ public class Engine implements Runnable {
 			renderer.unbind();
 		}
 		
-		if(window.isPaused() || !isPlaying) screen.render();
+		//if(window.isPaused() || !isPlaying) screen.render();
 
 	}
 		
