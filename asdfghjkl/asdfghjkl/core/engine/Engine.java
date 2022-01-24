@@ -117,6 +117,9 @@ public class Engine implements Runnable {
 		if(!window.isPaused() && isPlaying){
 			handler.tick(keys, camera, map);
 			dead = handler.isPlayerDeadOrJustInsane();
+			if(dead){
+				glClearColor(0.8f,0.1f,0.1f,0.0f);
+			}
 		} else {
 			screen.tick();
 		}
@@ -149,10 +152,8 @@ public class Engine implements Runnable {
 						glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 					} else {
 						for(int i = 0; i < map.getScale()/5; i++){
-							System.out.println("Sdfs");
 							handler.addItem(new BaseDumbEnemey(r.nextInt(20)));
 						}
-						System.out.println("tesad");
 					}
 				}
 			}
