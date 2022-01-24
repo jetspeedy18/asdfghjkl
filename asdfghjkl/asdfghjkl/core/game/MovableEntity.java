@@ -44,11 +44,11 @@ public abstract class MovableEntity {
 		return new Matrix4f().identity().translate(new Vector3f(x, y, 0)).rotateZ((float)Math.toRadians(rot)).scale(scale);
 	}
 	
-	public boolean isCollided(Player p, MovableEntity n) {
-		return (p.getX() > n.getX()-32f &&
-				p.getX() < n.getX()+32f &&
-				p.getY() > n.getY()-32f &&
-				p.getY() < n.getY()+32f);	
+	public boolean isCollided(MovableEntity n) {
+		return (this.x > n.getX()-32f &&
+				this.x < n.getX()+32f &&
+				this.y > n.getY()-32f &&
+				this.y < n.getY()+32f);	
 	}
 
 }
