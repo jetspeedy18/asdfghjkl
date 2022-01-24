@@ -141,6 +141,8 @@ public class Engine implements Runnable {
 			} catch (Exception e){}
 			
 			if(isPlaying){
+
+				window.setTitle("Health: " + String.valueOf(handler.getPlayer().getHealth()) + "  Time: " + counter/60);
 				
 				renderer.render();
 				

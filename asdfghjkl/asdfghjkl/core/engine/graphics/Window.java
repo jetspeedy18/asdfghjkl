@@ -29,7 +29,7 @@ public class Window {
 			
 			glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 			
-			window = glfwCreateWindow(1920, 1080, "hcsfwe", NULL, NULL);
+			window = glfwCreateWindow(1920, 1080, "Menu", NULL, NULL);
 			
 			if(window == NULL){
 				throw new Exception("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
@@ -103,6 +103,10 @@ public class Window {
 
 	public boolean isPaused() {
 		return paused;
+	}
+	
+	public void setTitle(String s){
+		glfwSetWindowTitle(window, s);
 	}
 	
 	public void setWindowRes(Camera camera){
