@@ -43,11 +43,12 @@ public abstract class MovableEntity {
 	public Matrix4f getPosMat(){
 		return new Matrix4f().identity().translate(new Vector3f(x, y, 0)).rotateZ((float)Math.toRadians(rot)).scale(scale);
 	}
-	public boolean isCollided(MovableEntity n) {
-		return (n.getX() > this.x-32f &&
-				n.getX() < this.x+32f &&
-				n.getY() > this.y +32f &&
-				n.getY() < this.y+32f);	
+	
+	public boolean isCollided(Player p, MovableEntity n) {
+		return (p.getX() > n.getX()-32f &&
+				p.getX() < n.getX()+32f &&
+				p.getY() > n.getY()-32f &&
+				p.getY() < n.getY()+32f);	
 	}
 
 }
