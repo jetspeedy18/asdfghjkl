@@ -144,7 +144,7 @@ public class Engine implements Runnable {
 					if(win = map.advanceLevel()){
 						glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 					} else {
-						for(int i = 0; i < map.getScale()/3; i++){
+						for(int i = 0; i < map.getScale()/5; i++){
 							System.out.println("Sdfs");
 							handler.addItem(new BaseDumbEnemey(r.nextInt(20)));
 						}

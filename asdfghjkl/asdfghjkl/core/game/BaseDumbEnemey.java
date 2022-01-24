@@ -14,16 +14,16 @@ public class BaseDumbEnemey extends GameItem {
 	private boolean dirX = r.nextBoolean();
 	private boolean dirY = r.nextBoolean();
 
-	private static final int SLOW = Texture.safeLoadTex("res/images/enemies/pixil-frame-0 (1).png");
-	private static final int FAST = Texture.safeLoadTex("res/images/enemies/pixil-frame-0 (2).png");
+	private static final Texture SLOW = new Texture(Texture.safeLoadTex("res/images/enemies/pixil-frame-0 (1).png"));
+	private static final Texture FAST = new Texture(Texture.safeLoadTex("res/images/enemies/pixil-frame-0 (2).png"));
 	
 	public BaseDumbEnemey(int speedFactor){
 		speedFactorx = r.nextInt(speedFactor);
 		speedFactory = speedFactor - speedFactorx;
 		if(speedFactor < 10){
-			mesh = new Mesh(new Texture(SLOW));
+			mesh = new Mesh(SLOW);
 		} else {
-			mesh = new Mesh(new Texture(FAST));
+			mesh = new Mesh(FAST);
 		}
 		x = 0;
 		y = 0;
