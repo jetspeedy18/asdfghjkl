@@ -17,8 +17,9 @@ public class Player extends MovableEntity {
 		rot = 0;
 		scale = 1;
 		speedFactor = 10;
-		health = 1;
-			
+
+		health = 100;
+
 	}
 	
 	public float getX(){
@@ -59,7 +60,9 @@ public class Player extends MovableEntity {
 		}
 	}
 	
-	
+	public boolean isPlayerDeadOrJustInsane(){
+		return health <= 0;
+	}
 	
 	public float getMaxSpeed(){
 		return speedFactor;

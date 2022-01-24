@@ -10,7 +10,8 @@ public class KeyMap {
 		MOVE_UP,
 		MOVE_DOWN,
 		MOVE_LEFT,
-		MOVE_RIGHT;
+		MOVE_RIGHT,
+		SPACE_BAR;
 	}
 	
 	private boolean[] keyPos;
@@ -29,6 +30,7 @@ public class KeyMap {
 		actionMap.put(ACTIONS.MOVE_DOWN, GLFW_KEY_S);
 		actionMap.put(ACTIONS.MOVE_LEFT, GLFW_KEY_A);
 		actionMap.put(ACTIONS.MOVE_RIGHT, GLFW_KEY_D);
+		actionMap.put(ACTIONS.SPACE_BAR, GLFW_KEY_SPACE);
 		
 	}
 	
