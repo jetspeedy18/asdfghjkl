@@ -60,7 +60,6 @@ public class Player extends MovableEntity {
 	}
 	
 	public boolean isPlayerDeadOrJustInsane(){
-		System.out.println(health);
 		return health<=0;
 	}
 	
