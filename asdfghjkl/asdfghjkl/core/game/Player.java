@@ -17,7 +17,11 @@ public class Player extends MovableEntity {
 		rot = 0;
 		scale = 1;
 		speedFactor = 10;
+<<<<<<< HEAD
 		health = 100;
+=======
+		health = 1;
+>>>>>>> b2f25b0aff14a4823db4240ce7945f781eec45af
 			
 	}
 	
@@ -57,14 +61,9 @@ public class Player extends MovableEntity {
 				health --;
 			}
 		}
-		
-		System.out.println(health);
-
 	}
 	
-	public boolean isPlayerDeadOrJustInsane(){
-		return health <= 0;
-	}
+	
 	
 	public int getHealth(){
 		return health;
