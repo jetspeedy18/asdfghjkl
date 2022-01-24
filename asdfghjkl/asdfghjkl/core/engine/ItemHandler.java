@@ -61,4 +61,8 @@ public class ItemHandler {
 		return player;
 	}
 
+	public boolean isPlayerDeadOrJustInsane() {
+		return player.isPlayerDeadOrJustInsane();
+	}
+
 }

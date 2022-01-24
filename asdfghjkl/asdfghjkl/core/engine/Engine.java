@@ -116,6 +116,7 @@ public class Engine implements Runnable {
 	private void tick(){
 		if(!window.isPaused() && isPlaying){
 			handler.tick(keys, camera, map);
+			dead = handler.isPlayerDeadOrJustInsane();
 		} else {
 			screen.tick();
 		}
@@ -161,9 +162,9 @@ public class Engine implements Runnable {
 			renderer.resetUniforms(handler.getPlayer().getPosMat(),end.getScale());
 			end.render();
 			renderer.unbind();
-		} else {
+		} else if(dead) {
 			renderer.bind();
-			renderer.resetUniforms(handler.getPlayer().getPosMat(),end.getScale());
+			renderer.resetUniforms(handler.getPlayer().getPosMat(),death.getScale());
 			death.render();
 			renderer.unbind();
 		}
