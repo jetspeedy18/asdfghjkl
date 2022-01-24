@@ -51,6 +51,15 @@ public class Mesh {
             0, 1, 3, 3, 1, 2,
         };
     
+    public Mesh(int sx, int sy, Texture texture){
+    	this(new float[] {
+    			position[0]*sx, position[1]*sy,position[2],
+    			position[3]*sx, position[4]*sy,position[5],
+    			position[6]*sx, position[7]*sy,position[8],
+    			position[9]*sx, position[10]*sy,position[11],
+    	}, textureCoord, indice, texture);
+    }
+    
     public Mesh(Texture texture){
     	this(position, textureCoord, indice, texture);
     }

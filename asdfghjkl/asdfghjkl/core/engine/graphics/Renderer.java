@@ -2,6 +2,8 @@ package core.engine.graphics;
 
 import static org.lwjgl.opengl.GL20.*;
 
+import org.joml.Matrix4f;
+
 import core.engine.Camera;
 import core.engine.ItemHandler;
 import core.utils.Utils;
@@ -39,9 +41,6 @@ public class Renderer {
 	}
 	
 	public void render(){
-		program.setUniform("texture_sampler", 0);
-		
-		program.setUniform("proj", camera.getCameraPos());
 		
 		handler.render(program);
 	}
@@ -52,5 +51,12 @@ public class Renderer {
 	
 	public void cleanup(){
 		program.cleanup();
+	}
+
+	public void resetUniforms(int s) {
+		program.setUniform("texture_sampler", 0);
+		
+		program.setUniform("proj", camera.getCameraPos());
+		program.setUniform("trans", new Matrix4f().identity().scale(s));
 	}
 }
