@@ -33,7 +33,7 @@ public class quadtree {
 	private String getPoints() {
 		String f=null;
 		for (int i = 0; i<this.points.size(); i++) {
-			f += " -- " + Integer.toString(points.get(i).getX()) + ", " + Integer.toString(points.get(i).getY());
+			f += this.points.get(i).toString();
 		}
 		return f;
 	}
@@ -61,7 +61,6 @@ public class quadtree {
 		}
 		else {
 			if(!this.divided) {
-				System.out.println("sub");
 				subdivide();
 			}
 			this.northwest.insert(p);

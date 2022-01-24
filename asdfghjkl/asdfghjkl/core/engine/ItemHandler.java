@@ -39,7 +39,7 @@ public class ItemHandler {
 			item.tick();
 			item.mapClamp(map);
 		}
-		player.tick(keys);
+		player.tick(keys, items);
 		player.mapClamp(map);
 		camera.tick(player.getX(), player.getY(), player.getMaxSpeed());
 	}

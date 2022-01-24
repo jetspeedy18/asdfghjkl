@@ -1,11 +1,14 @@
 package core.game;
 
+import java.util.List;
+
 import core.engine.input.KeyMap;
 import core.engine.input.KeyMap.ACTIONS;
 
 public class Player extends MovableEntity {
 	
 	private float speedFactor;
+	private int health;
 
 	public Player(Mesh mesh){
 		this.mesh = mesh;
@@ -14,6 +17,7 @@ public class Player extends MovableEntity {
 		rot = 0;
 		scale = 1;
 		speedFactor = 10;
+		health = 100;
 			
 	}
 	
@@ -25,7 +29,7 @@ public class Player extends MovableEntity {
 		return y;
 	}
 	
-	public void tick(KeyMap keys){
+	public void tick(KeyMap keys, List<GameItem> items){
 		double inx = 0;
 		double iny = 0;
 		if(keys.getKeyPos(ACTIONS.MOVE_UP)){
@@ -47,6 +51,12 @@ public class Player extends MovableEntity {
 		
 		x += inx * speedFactor;
 		y += iny * speedFactor;
+		
+		for (GameItem Item: items) {
+			if (isCollided(Item)) {
+				health --;
+			}
+		}
 
 	}
 	

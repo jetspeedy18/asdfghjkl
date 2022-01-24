@@ -14,5 +14,8 @@ public class point {
 		return this.x;
 
 	}
+	public String toString() {
+		return "(" + Integer.toString(this.x) + ", " + Integer.toString(this.y) + ")";
+	}
 }
 
