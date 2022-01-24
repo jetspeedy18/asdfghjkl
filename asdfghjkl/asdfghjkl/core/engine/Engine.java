@@ -9,6 +9,7 @@ import core.engine.graphics.menus.Pause;
 import core.engine.graphics.menus.Screen;
 import core.engine.input.KeyMap;
 import core.game.BaseDumbEnemey;
+import core.game.DeathThereGoodSIr;
 import core.game.MapHandler;
 import core.game.endScreen;
 
@@ -35,8 +36,10 @@ public class Engine implements Runnable {
 	private boolean isPlaying = false;
 	
 	private boolean win = false;
+	private boolean dead = false;
 	
 	private endScreen end;
+	private DeathThereGoodSIr death;
 	
 	private int counter = 0;
 	
@@ -56,6 +59,7 @@ public class Engine implements Runnable {
 	public void createNewGame(){
 		//screen = null;
 		end = new endScreen();
+		death = new DeathThereGoodSIr();
 		
 		map = new MapHandler();
 		
@@ -66,7 +70,6 @@ public class Engine implements Runnable {
 		handler.addItem(new BaseDumbEnemey(r.nextInt(20)));
 		handler.addItem(new BaseDumbEnemey(r.nextInt(20)));
 		handler.addItem(new BaseDumbEnemey(r.nextInt(10)));
-		System.out.println("Sdfds");
 		try {
 			renderer = new Renderer(camera, handler);
 			
@@ -122,7 +125,7 @@ public class Engine implements Runnable {
 
 		glClear(GL_COLOR_BUFFER_BIT);
 		
-		if(!win){
+		if(!win && !dead){
 			if(isPlaying){
 				renderer.bind();
 				renderer.resetUniforms(map.getScale());
@@ -153,10 +156,15 @@ public class Engine implements Runnable {
 				}
 			}
 				
-		} else {
+		} else if (win) {
 			renderer.bind();
 			renderer.resetUniforms(handler.getPlayer().getPosMat(),end.getScale());
 			end.render();
+			renderer.unbind();
+		} else {
+			renderer.bind();
+			renderer.resetUniforms(handler.getPlayer().getPosMat(),end.getScale());
+			death.render();
 			renderer.unbind();
 		}
 		

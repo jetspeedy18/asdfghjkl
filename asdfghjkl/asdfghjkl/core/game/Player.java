@@ -57,6 +57,8 @@ public class Player extends MovableEntity {
 				health --;
 			}
 		}
+		
+		System.out.println(health);
 
 	}
 	
