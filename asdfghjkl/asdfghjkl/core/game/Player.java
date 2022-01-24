@@ -47,7 +47,10 @@ public class Player extends MovableEntity {
 		
 		x += inx * speedFactor;
 		y += iny * speedFactor;
+
 	}
+	
+	
 	
 	public float getMaxSpeed(){
 		return speedFactor;

@@ -69,4 +69,13 @@ public class Texture {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public static int safeLoadTex(String string) {
+		try{
+			 return loadTex(string);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		return -1;
+	}
 }

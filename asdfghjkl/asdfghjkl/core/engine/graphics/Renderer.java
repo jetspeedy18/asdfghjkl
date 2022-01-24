@@ -59,4 +59,13 @@ public class Renderer {
 		program.setUniform("proj", camera.getCameraPos());
 		program.setUniform("trans", new Matrix4f().identity().scale(s));
 	}
+	
+	public void resetUniforms(Matrix4f mat, int s){
+
+		program.setUniform("texture_sampler", 0);
+		
+		program.setUniform("proj", camera.getCameraPos());
+		program.setUniform("trans", mat.scale(s));
+		
+	}
 }

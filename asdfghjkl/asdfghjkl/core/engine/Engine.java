@@ -8,7 +8,9 @@ import core.engine.graphics.menus.Menu;
 import core.engine.graphics.menus.Pause;
 import core.engine.graphics.menus.Screen;
 import core.engine.input.KeyMap;
+import core.game.BaseDumbEnemey;
 import core.game.MapHandler;
+import core.game.endScreen;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -32,6 +34,12 @@ public class Engine implements Runnable {
 	
 	private boolean isPlaying = false;
 	
+	private boolean win = false;
+	
+	private endScreen end;
+	
+	private int counter = 0;
+	
 	public Engine(){
 		keys = new KeyMap();
 		window = new Window();
@@ -47,6 +55,7 @@ public class Engine implements Runnable {
 	
 	public void createNewGame(){
 		//screen = null;
+		end = new endScreen();
 		
 		map = new MapHandler();
 		
@@ -54,6 +63,10 @@ public class Engine implements Runnable {
 		
 		camera = new Camera();
 		handler = new ItemHandler();
+		handler.addItem(new BaseDumbEnemey(r.nextInt(20)));
+		handler.addItem(new BaseDumbEnemey(r.nextInt(20)));
+		handler.addItem(new BaseDumbEnemey(r.nextInt(10)));
+		System.out.println("Sdfds");
 		try {
 			renderer = new Renderer(camera, handler);
 			
@@ -99,7 +112,7 @@ public class Engine implements Runnable {
 	
 	private void tick(){
 		if(!window.isPaused() && isPlaying){
-			handler.tick(keys, camera);
+			handler.tick(keys, camera, map);
 		} else {
 			screen.tick();
 		}
@@ -109,20 +122,41 @@ public class Engine implements Runnable {
 
 		glClear(GL_COLOR_BUFFER_BIT);
 		
-		if(isPlaying){
+		if(!win){
+			if(isPlaying){
+				renderer.bind();
+				renderer.resetUniforms(map.getScale());
+				map.render();
+			}
+			
+			try{
+				screen.render();
+			} catch (Exception e){}
+			
+			if(isPlaying){
+				
+				renderer.render();
+				
+				renderer.unbind();
+				
+				counter++;
+				if(counter > map.getScale()*120){
+					if(win = map.advanceLevel()){
+						glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+					} else {
+						for(int i = 0; i < map.getScale()*map.getScale(); i++){
+							System.out.println("Sdfs");
+							handler.addItem(new BaseDumbEnemey(r.nextInt(20)));
+						}
+						System.out.println("tesad");
+					}
+				}
+			}
+				
+		} else {
 			renderer.bind();
-			renderer.resetUniforms(map.getScale());
-			map.render();
-		}
-		
-		try{
-			screen.render();
-		} catch (Exception e){}
-		
-		if(isPlaying){
-			
-			renderer.render();
-			
+			renderer.resetUniforms(handler.getPlayer().getPosMat(),end.getScale());
+			end.render();
 			renderer.unbind();
 		}
 		

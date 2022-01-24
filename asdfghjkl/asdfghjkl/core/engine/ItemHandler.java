@@ -7,6 +7,7 @@ import core.engine.graphics.ShaderLoader;
 import core.engine.graphics.Texture;
 import core.engine.input.KeyMap;
 import core.game.GameItem;
+import core.game.MapHandler;
 import core.game.Mesh;
 import core.game.Player;
 
@@ -33,11 +34,13 @@ public class ItemHandler {
 		return items;
 	}
 	
-	public void tick(KeyMap keys, Camera camera){
+	public void tick(KeyMap keys, Camera camera, MapHandler map){
 		for(GameItem item : items){
 			item.tick();
+			item.mapClamp(map);
 		}
 		player.tick(keys);
+		player.mapClamp(map);
 		camera.tick(player.getX(), player.getY(), player.getMaxSpeed());
 	}
 	
@@ -54,7 +57,7 @@ public class ItemHandler {
 		items = new ArrayList<GameItem>();
 	}
 	
-	private Player getPlayer(){
+	public Player getPlayer(){
 		return player;
 	}
 

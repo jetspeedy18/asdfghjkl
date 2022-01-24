@@ -35,6 +35,10 @@ public class MapHandler {
 		return false;
 	}
 	
+	public int getMapBounds(){
+		return 60*scale;
+	}
+	
 	public int getScale(){
 		return scale;
 	}

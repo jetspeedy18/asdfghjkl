@@ -17,6 +17,22 @@ public abstract class MovableEntity {
 		return mesh;
 	}
 	
+	public void mapClamp(MapHandler map){
+		
+		if(y + 16 > map.getMapBounds()){
+			y = map.getMapBounds() - 16;
+		} else if(y - 16 < -map.getMapBounds()){
+			y = -map.getMapBounds() + 16;
+		}
+		
+		if(x + 16 > map.getMapBounds()){
+			x = map.getMapBounds() - 16;
+		} else if(x - 16 < -map.getMapBounds()){
+			x = -map.getMapBounds() + 16;
+		}
+		
+	}
+	
 	public Matrix4f getPosMat(){
 		return new Matrix4f().identity().translate(new Vector3f(x, y, 0)).rotateZ((float)Math.toRadians(rot)).scale(scale);
 	}
