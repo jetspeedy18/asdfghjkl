@@ -11,14 +11,22 @@ public class Boss extends GameItem {
 	
 	private int counter;
 	
+	private Mesh mainMesh;
+	private Mesh hitMesh;
+	
+	private int damage;
+	
 	public Boss(){
-		mesh = new Mesh(new Texture(Texture.safeLoadTex("res/images/enemies/pixil-frame-0 (9).png")));
+		mainMesh = new Mesh(new Texture(Texture.safeLoadTex("res/images/enemies/pixil-frame-0 (9).png")));
+		hitMesh = new Mesh(new Texture(Texture.safeLoadTex("res/images/enemies/pixil-frame-0 (10).png")));
 		x = 0;
 		y = 0;
 		rot = 0;
 		scale = 2;
 		counter = 0;
 		health = 3;
+		mesh = mainMesh;
+		damage = 0;
 	}
 
 	@Override
@@ -40,6 +48,18 @@ public class Boss extends GameItem {
 				handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)));
 			}
 		}
+		
+		damage --;
+		if(damage <= 0){
+			mesh = mainMesh;
+		}
+	}
+	
+	@Override
+	public void damage(){
+		super.damage();
+		mesh = hitMesh;
+		damage = 60;
 	}
 	
 }
