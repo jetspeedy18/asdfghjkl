@@ -50,10 +50,14 @@ public class bullet extends MovableEntity {
 		this.x += tx * speedFactor;
 		this.y += ty * speedFactor;
 		
+		GameItem byby = null;
+		
 		for (GameItem Item: items) {
 			if (isCollided(Item)) {
-				items.remove(Item);
+				byby = Item;
 			}
 		}
+		
+		if(byby != null) items.remove(byby);
 	}
 }
