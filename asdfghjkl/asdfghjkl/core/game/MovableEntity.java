@@ -29,8 +29,7 @@ public abstract class MovableEntity {
 			x = map.getMapBounds() - 16;
 		} else if(x - 16 < -map.getMapBounds()){
 			x = -map.getMapBounds() + 16;
-		}
-		
+		}	
 	}
 	
 	public float getX() {

@@ -47,8 +47,8 @@ public class Player extends MovableEntity {
 		return dir;
 	}
 	public boolean hasShot() {
+		ammo--;
 		return shot;
-		
 	}
 	
 	public void endShot(){

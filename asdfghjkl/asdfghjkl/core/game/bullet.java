@@ -12,6 +12,7 @@ public class bullet extends MovableEntity {
 	public List<bullet> bullets;
 	private boolean done = false;
 	private int ammo;
+	private boolean inBounds;
 	
 	
 	public bullet(float x, float y, Player p) {
@@ -23,6 +24,7 @@ public class bullet extends MovableEntity {
 		speedFactor = 20;
 		dir = this.dir=p.getDir();
 		ammo = 3;
+		inBounds = true;
 	}
 	
 	public void setX(double x) {
@@ -78,6 +80,18 @@ public class bullet extends MovableEntity {
 			}
 		}
 		return false;
+	}
+	@Override
+	public void mapClamp(MapHandler map){
+		double lx = x;
+		double ly = y;
+		super.mapClamp(map);
+		
+		if(lx != x || ly != y) inBounds = false;
+		else inBounds = true;
+	}
+	public boolean inBounds() {
+		return this.inBounds;
 	}
 	
 	public boolean clip() {
