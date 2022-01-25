@@ -24,6 +24,8 @@ public class Player extends MovableEntity {
 		dir = 0;
 		shot = false;
 
+		health = 100;
+
 	}
 	
 	public float getX(){
@@ -81,10 +83,13 @@ public class Player extends MovableEntity {
 		}
 	}
 	
-	
-
 	public boolean isPlayerDeadOrJustInsane(){
-		return health <= 0;
+		return health<=0;
+	}
+	
+	public int getHealth(){
+		return health;
+
 	}
 	
 	public float getMaxSpeed(){
