@@ -183,6 +183,10 @@ public class Game {
 
 		public void actionPerformed(ActionEvent event) {
 			
+			titleNamePanel.setVisible(false);
+			startButtonPanel.setVisible(false);
+			optionsButtonPanel.setVisible(false);
+			quitButtonPanel.setVisible(false);
 			//Run Game
 		}
 		
