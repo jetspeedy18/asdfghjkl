@@ -34,15 +34,19 @@ public class bullet extends MovableEntity {
 		double tx = 0;
 		double ty = 0;
 		if(this.dir == 90){
+			this.rot=0;
 			ty++;
 		}
 		if(this.dir == 270){
+			this.rot=180;
 			ty--;
 		}
 		if(this.dir == 180){
+			this.rot=90;
 			tx--;
 		}
 		if(this.dir == 0){
+			this.rot=270;
 			tx++;
 		}
 		
