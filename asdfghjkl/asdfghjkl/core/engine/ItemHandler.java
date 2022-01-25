@@ -53,8 +53,14 @@ public class ItemHandler {
 		player.mapClamp(map);
 		camera.tick(player.getX(), player.getY(), player.getMaxSpeed());
 		if (player.hasShot()) {
-			b = new bullet(player.getX(), player.getY());
-			b.tick();
+			if (b==null) {
+				b = new bullet(player.getX(), player.getY(), player);
+			}
+			else if (b!=null) {
+				b.tick(items);
+			}
+		} else {
+			b=null;
 		}
 		
 	}

@@ -12,14 +12,14 @@ public class bullet extends MovableEntity {
 	public List<bullet> bullets;
 	
 	
-	public bullet(float x, float y) {
+	public bullet(float x, float y, Player p) {
 		this.mesh = new Mesh(new Texture(Texture.safeLoadTex("res/images/bullet.png")));
 		this.x = x;
 		this.y = y;
 		rot = 0;
 		scale = 1;
 		speedFactor = 20;
-		dir = 0;
+		dir = this.dir=p.getDir();
 	}
 	
 	public void setX(double x) {
@@ -28,18 +28,9 @@ public class bullet extends MovableEntity {
 	public void setY(double d) {
 		this.y = (float) d;
 	}
-	
-	public void setDir(Player p) {
-		this.dir = p.getDir();
-	}
-	
-	public void addBullet(bullet b) {
-		bullets.add(b);
-	}
 
+	public void tick(List<GameItem> items){
 	
-	public void tick(){
-		
 		double tx = 0;
 		double ty = 0;
 		if(this.dir == 90){
@@ -56,16 +47,13 @@ public class bullet extends MovableEntity {
 		}
 		
 
-		this.x += tx * ( speedFactor);
-		this.y +=20;
-		}
+		this.x += tx * speedFactor;
+		this.y += ty * speedFactor;
 		
-		/*
 		for (GameItem Item: items) {
 			if (isCollided(Item)) {
-				
+				items.remove(Item);
 			}
 		}
-		*/
-	
+	}
 }
