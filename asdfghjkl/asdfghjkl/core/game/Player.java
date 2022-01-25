@@ -10,7 +10,7 @@ public class Player extends MovableEntity {
 	private float speedFactor;
 	private int health;
 	private int dir;
-	private static boolean shot;
+	private boolean shot;
 
 	public Player(Mesh mesh){
 		this.mesh = mesh;
