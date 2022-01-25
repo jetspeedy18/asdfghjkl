@@ -6,18 +6,8 @@ https://docs.google.com/document/d/15wl3HpZtB5NEKJGzLHsTvVViikjZFgxvEmmOB5t_5Pw/
 Planning Chart: https://seattleschools-my.sharepoint.com/:w:/g/personal/1nhnguyen_seattleschools_org/EXOeSkPtIMRCtmgbQTLiNfUBUewWtVEku4V3wtqhO7qSXg?e=N1u2d3
 
 # Ideas:
-Endlesss puzzle levels dungeon crawler
-once you get to the end you unlock the next one
-potenital mario copyright enfringement
-shaders? - possible ambient lighting
-jump scares?
-massive transitions
+Touhou but Jank AF
 
 ## combat:
-  being able to pick up items
-  AI boss fight?
-  
-
-## Mr. Britton is the final boss
-  boss fight is him making a PB and J
-  end credits
+  Run around and kill things
+  While not dying
