@@ -94,8 +94,10 @@ public class ItemHandler {
 		player.getMesh().render();
 				
 		if (player.hasShot()) {
-			program.setUniform("trans", b.getPosMat());
-			b.getMesh().render();
+			if (b.clip()) {
+				program.setUniform("trans", b.getPosMat());
+				b.getMesh().render();
+			}
 		}
 		if (player.hasShield()) {
 			program.setUniform("trans", s.getPosMat());

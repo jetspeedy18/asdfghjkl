@@ -11,6 +11,7 @@ public class bullet extends MovableEntity {
 	private int dir;
 	public List<bullet> bullets;
 	private boolean done = false;
+	private int ammo;
 	
 	
 	public bullet(float x, float y, Player p) {
@@ -21,6 +22,7 @@ public class bullet extends MovableEntity {
 		scale = 1;
 		speedFactor = 20;
 		dir = this.dir=p.getDir();
+		ammo = 3;
 	}
 	
 	public void setX(double x) {
@@ -76,6 +78,14 @@ public class bullet extends MovableEntity {
 			}
 		}
 		return false;
+	}
+	
+	public boolean clip() {
+		if (ammo<=0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 	public boolean kill(){

@@ -15,6 +15,7 @@ public class Player extends MovableEntity {
 	private static int count;
 	private static int shieldTimer;
 	private static int shieldUses;
+	private static int ammo;
 
 	public Player(Mesh mesh){
 		this.mesh = mesh;
@@ -31,6 +32,7 @@ public class Player extends MovableEntity {
 
 		health = 169;
 		shieldUses = 3;
+		ammo = 3;
 
 	}
 	
@@ -46,6 +48,7 @@ public class Player extends MovableEntity {
 	}
 	public boolean hasShot() {
 		return shot;
+		
 	}
 	
 	public void endShot(){
@@ -54,7 +57,8 @@ public class Player extends MovableEntity {
 	public boolean hasShield() {
 		return sActive;
 	}
-	public void tick(KeyMap keys, List<GameItem> items){
+	
+	public boolean tick(KeyMap keys, List<GameItem> items){
 		double inx = 0;
 		double iny = 0;
 		if(keys.getKeyPos(ACTIONS.MOVE_UP)){
@@ -90,7 +94,7 @@ public class Player extends MovableEntity {
 			}
 		}
 		
-		if (shieldTimer>=400) {
+		if (shieldTimer>=200) {
 			this.sActive = false;
 			if (keys.getKeyPos(ACTIONS.F_KEY) && shieldUses>0) {
 				this.sActive = true;
@@ -104,10 +108,30 @@ public class Player extends MovableEntity {
 					health --;
 				}
 			}
-		}		
+		}	else {
+			GameItem byby = null;
+			
+			for (GameItem Item: items) {
+				if (isCollided(Item)) {
+					byby = Item;
+					Item.damage();
+					break;
+				}
+			}
+			if(byby != null) {
+				if(byby.getHealth() <= 0){
+					if(byby instanceof Boss){
+						return true;
+					} else {
+						items.remove(byby);
+					}
+				}
+			}
+		}
 		
 		count ++;
 		shieldTimer++;
+		return true;
 	}
 	
 	public boolean isPlayerDeadOrJustInsane(){
