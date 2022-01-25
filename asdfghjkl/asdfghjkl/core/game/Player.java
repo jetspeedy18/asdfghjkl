@@ -9,6 +9,8 @@ public class Player extends MovableEntity {
 	
 	private float speedFactor;
 	private int health;
+	private int dir;
+	private static boolean shot;
 
 	public Player(Mesh mesh){
 		this.mesh = mesh;
@@ -19,6 +21,8 @@ public class Player extends MovableEntity {
 		speedFactor = 10;
 
 		health = 100;
+		dir = 0;
+		shot = false;
 
 	}
 	
@@ -29,22 +33,33 @@ public class Player extends MovableEntity {
 	public float getY(){
 		return y;
 	}
-	
+	public int getDir() {
+		return dir;
+	}
+	public static boolean hasShot() {
+		return shot;
+	}
 	public void tick(KeyMap keys, List<GameItem> items){
 		double inx = 0;
 		double iny = 0;
+		this.shot = false;
 		if(keys.getKeyPos(ACTIONS.MOVE_UP)){
 			iny++;
+			this.dir = 90;
 		}
 		if(keys.getKeyPos(ACTIONS.MOVE_DOWN)){
 			iny--;
+			this.dir = 270;
 		}
 		if(keys.getKeyPos(ACTIONS.MOVE_LEFT)){
 			inx--;
+			this.dir = 180;
 		}
 		if(keys.getKeyPos(ACTIONS.MOVE_RIGHT)){
 			inx++;
+			this.dir = 0;
 		}
+		
 		if(inx != 0 && iny != 0){
 			inx /= Math.sqrt(2);
 			iny /= Math.sqrt(2);
@@ -53,6 +68,12 @@ public class Player extends MovableEntity {
 		x += inx * speedFactor;
 		y += iny * speedFactor;
 		
+		if (keys.getKeyPos(ACTIONS.SPACE_BAR)) {
+			bullet b = new bullet(this.x, this.y);
+			b.fire();
+			this.shot = true;
+		}
+		 
 		for (GameItem Item: items) {
 			if (isCollided(Item)) {
 				health --;
@@ -60,6 +81,8 @@ public class Player extends MovableEntity {
 		}
 	}
 	
+	
+
 	public boolean isPlayerDeadOrJustInsane(){
 		return health <= 0;
 	}

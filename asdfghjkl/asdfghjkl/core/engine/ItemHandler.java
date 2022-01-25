@@ -9,13 +9,18 @@ import core.engine.input.KeyMap;
 import core.game.GameItem;
 import core.game.MapHandler;
 import core.game.Mesh;
+import core.game.MovableEntity;
 import core.game.Player;
+import core.game.bullet;
 
 public class ItemHandler {
 	
 	private List<GameItem> items;
 	
 	private Player player;
+	
+	private bullet b;
+
 	
 	public ItemHandler(){
 		clear();
@@ -28,6 +33,11 @@ public class ItemHandler {
 	
 	public void addItem(GameItem item){
 		items.add(item);
+	}
+	
+	public void removeItem(int i) {
+		items.remove(i);
+		//destroy enemy - hide entity and remove from list
 	}
 	
 	public List<GameItem> getItems(){
@@ -51,6 +61,22 @@ public class ItemHandler {
 		}
 		program.setUniform("trans", player.getPosMat());
 		player.getMesh().render();
+		
+		if (Player.hasShot()) {
+			System.out.println("something");
+			bullet b = new bullet(player.getX(), player.getY());
+			program.setUniform("trans", (b.getPosMat()));
+			b.getMesh().render();
+		}
+		/*
+		 *eventually going to figure out a way to have a list of bullets and to render each of them 
+		 *
+		for(bullet bullet: bullets) {
+			program.setUniform("trans", ((MovableEntity) bullets).getPosMat());
+			bullet.getMesh().render();
+		}
+		*/
+		
 	}
 	
 	public void clear(){

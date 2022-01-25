@@ -57,4 +57,8 @@ public class BaseDumbEnemey extends GameItem {
 		if(ly != y) dirY = !dirY;
 	}
 	
+	public void death() {
+		
+	}
+	
 }
