@@ -21,6 +21,7 @@ public class bullet extends MovableEntity {
 		scale = 1;
 		speedFactor = 20;
 		dir = this.dir=p.getDir();
+		collided = false;
 	}
 	
 	public void setX(double x) {
@@ -29,9 +30,13 @@ public class bullet extends MovableEntity {
 	public void setY(double d) {
 		this.y = (float) d;
 	}
+	
+	public boolean col() {
+		return collided;
+	}
 
 	public void tick(List<GameItem> items){
-	
+		collided = false;
 		double tx = 0;
 		double ty = 0;
 		if(this.dir == 90){

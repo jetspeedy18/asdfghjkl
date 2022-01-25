@@ -91,7 +91,7 @@ public class ItemHandler {
 		program.setUniform("trans", player.getPosMat());
 		player.getMesh().render();
 				
-		if (player.hasShot()) {
+		if (player.hasShot() && !b.col()) {
 			program.setUniform("trans", b.getPosMat());
 			b.getMesh().render();
 		}
