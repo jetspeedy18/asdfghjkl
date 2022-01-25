@@ -103,6 +103,9 @@ public class Mesh {
 
             glBindBuffer(GL_ARRAY_BUFFER, 0);
             glBindVertexArray(0);
+            
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         } finally {
             if (posBuffer != null) {
                 MemoryUtil.memFree(posBuffer);
