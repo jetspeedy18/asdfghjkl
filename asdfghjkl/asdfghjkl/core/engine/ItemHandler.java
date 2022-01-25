@@ -52,6 +52,11 @@ public class ItemHandler {
 		player.tick(keys, items);
 		player.mapClamp(map);
 		camera.tick(player.getX(), player.getY(), player.getMaxSpeed());
+		if (player.hasShot()) {
+			b = new bullet(player.getX(), player.getY());
+			b.tick();
+		}
+		
 	}
 	
 	public void render(ShaderLoader program){
@@ -63,8 +68,6 @@ public class ItemHandler {
 		player.getMesh().render();
 		
 		if (Player.hasShot()) {
-			System.out.println("something");
-			bullet b = new bullet(player.getX(), player.getY());
 			program.setUniform("trans", (b.getPosMat()));
 			b.getMesh().render();
 		}

@@ -70,17 +70,18 @@ public class Player extends MovableEntity {
 		x += inx * speedFactor;
 		y += iny * speedFactor;
 		
+		
 		if (keys.getKeyPos(ACTIONS.SPACE_BAR)) {
-			bullet b = new bullet(this.x, this.y);
-			b.fire();
 			this.shot = true;
 		}
-		 
+		
+		
 		for (GameItem Item: items) {
 			if (isCollided(Item)) {
 				health --;
 			}
 		}
+		
 	}
 	
 	public boolean isPlayerDeadOrJustInsane(){

@@ -36,7 +36,10 @@ public class bullet extends MovableEntity {
 	public void addBullet(bullet b) {
 		bullets.add(b);
 	}
-	public void fire() {
+	public void fire(float x, float y) {
+		this.x = x;
+		this.y = y;
+		/*
 		double tx = 0;
 		double ty = 0;
 		if(this.dir == 90){
@@ -57,15 +60,35 @@ public class bullet extends MovableEntity {
 			ty /= Math.sqrt(2);
 		}
 		/*
-		this.x += tx *(2* speedFactor);
-		this.y += ty * (2*speedFactor);
+	
 		*/
 		//b.tick();
 		//addBullet(b);
 	}
 	
-	public void tick(KeyMap keys){
+	public void tick(){
 		
+		double tx = 0;
+		double ty = 0;
+		if(this.dir == 90){
+			ty=1;
+		}
+		if(this.dir == 270){
+			ty=-1;
+		}
+		if(this.dir == 180){
+			tx=-1;
+		}
+		if(this.dir == 0){
+			tx=1;
+		}
+		
+		if(tx != 0 && ty != 0){
+			tx /= Math.sqrt(2);
+			ty /= Math.sqrt(2);
+			}
+		//this.x += tx * (2* speedFactor);
+		//this.y += ty * (2* speedFactor);
 		}
 		
 		/*
