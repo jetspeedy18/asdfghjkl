@@ -46,7 +46,7 @@ public class ItemHandler {
 	
 	public void tick(KeyMap keys, Camera camera, MapHandler map){
 		for(GameItem item : items){
-			item.tick();
+			item.tick(this);
 			item.mapClamp(map);
 		}
 		player.tick(keys, items);

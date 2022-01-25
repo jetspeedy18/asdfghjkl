@@ -2,6 +2,7 @@ package core.game;
 
 import java.util.Random;
 
+import core.engine.ItemHandler;
 import core.engine.graphics.Texture;
 
 public class BaseDumbEnemey extends GameItem {
@@ -32,7 +33,7 @@ public class BaseDumbEnemey extends GameItem {
 	}
 	
 	@Override
-	public void tick(){
+	public void tick(ItemHandler handler){
 		
 		if(dirY){
 			y += speedFactorx + r.nextFloat() ;
