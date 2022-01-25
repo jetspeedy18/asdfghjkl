@@ -11,6 +11,7 @@ public class Player extends MovableEntity {
 	private int health;
 	private int dir;
 	private boolean shot;
+	private static int count;
 
 	public Player(Mesh mesh){
 		this.mesh = mesh;
@@ -44,7 +45,6 @@ public class Player extends MovableEntity {
 	public void tick(KeyMap keys, List<GameItem> items){
 		double inx = 0;
 		double iny = 0;
-		this.shot = false;
 		if(keys.getKeyPos(ACTIONS.MOVE_UP)){
 			iny++;
 			this.dir = 90;
@@ -70,17 +70,21 @@ public class Player extends MovableEntity {
 		x += inx * speedFactor;
 		y += iny * speedFactor;
 		
-		
-		if (keys.getKeyPos(ACTIONS.SPACE_BAR)) {
-			this.shot = true;
+		if (count>=100) {
+			this.shot = false;
+			if (keys.getKeyPos(ACTIONS.SPACE_BAR)) {
+				this.shot = true;
+				count=0;
+				System.out.println("test");
+			}
 		}
-		
 		
 		for (GameItem Item: items) {
 			if (isCollided(Item)) {
 				health --;
 			}
 		}
+		count ++;
 		
 	}
 	
