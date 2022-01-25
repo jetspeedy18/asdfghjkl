@@ -9,6 +9,7 @@ import core.engine.graphics.menus.Pause;
 import core.engine.graphics.menus.Screen;
 import core.engine.input.KeyMap;
 import core.game.BaseDumbEnemey;
+import core.game.BasicStalkerEnemy;
 import core.game.DeathThereGoodSIr;
 import core.game.MapHandler;
 import core.game.endScreen;
@@ -70,6 +71,7 @@ public class Engine implements Runnable {
 		handler.addItem(new BaseDumbEnemey(r.nextInt(20)));
 		handler.addItem(new BaseDumbEnemey(r.nextInt(20)));
 		handler.addItem(new BaseDumbEnemey(r.nextInt(10)));
+		handler.addItem(new BasicStalkerEnemy(2, map.getMapBounds()));
 		try {
 			renderer = new Renderer(camera, handler);
 			
