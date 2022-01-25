@@ -43,7 +43,7 @@ public class Boss extends GameItem {
 		
 		if(counter%45==0){
 			for(int i = 0; i < 2; i++){
-					if(r.nextInt(15) == 3){
+				if(r.nextInt(15) == 3){
 					handler.queAddItem(new BasicStalkerEnemy(r.nextInt(5)+2, x, y));
 				} else {
 					handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)+1, x, y));

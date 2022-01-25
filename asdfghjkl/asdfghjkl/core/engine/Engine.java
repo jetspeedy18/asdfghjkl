@@ -142,20 +142,24 @@ public class Engine implements Runnable {
 			
 			if(isPlaying){
 
-				window.setTitle("Health: " + String.valueOf(handler.getPlayer().getHealth()) + "  Time: " + counter/60 + "  Shields: " + handler.getPlayer().getShields());
+				window.setTitle("Health: " + String.valueOf(handler.getPlayer().getHealth()) + "  Time: " + counter/60 + "  Shields: " + handler.getPlayer().getShields() + " Wave: " + String.valueOf(map.getScale()/5));
 				
 				renderer.render();
 				
 				renderer.unbind();
 				
 				counter++;
-				if(counter > map.getScale()*180){
+				if(counter > map.getScale()*200){
 					if(!boss){
 						if(boss = map.advanceLevel()){
 							handler.queAddItem(new Boss());
 						} else {
-							for(int i = 0; i < map.getScale()/3; i++){
-								handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)+1));
+							for(int i = 0; i < map.getScale()*map.getScale()/5; i++){
+								if(r.nextInt(15) == 3){
+									handler.queAddItem(new BasicStalkerEnemy(r.nextInt(5)+2,map.getMapBounds()));
+								} else {
+									handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)+1));
+								}
 							}
 						}
 					} else {
