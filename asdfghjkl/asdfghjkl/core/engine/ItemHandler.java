@@ -68,7 +68,6 @@ public class ItemHandler {
 		player.getMesh().render();
 		
 		if (player.hasShot()) {
-			System.out.println("Test");
 			program.setUniform("trans", b.getPosMat());
 			b.getMesh().render();
 		}
