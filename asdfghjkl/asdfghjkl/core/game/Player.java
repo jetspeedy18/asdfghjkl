@@ -29,7 +29,7 @@ public class Player extends MovableEntity {
 		shot = false;
 		sActive = false;
 
-		health = 100;
+		health = 1000000000;
 		shieldUses = 3;
 
 	}
