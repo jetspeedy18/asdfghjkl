@@ -11,6 +11,7 @@ import core.game.MapHandler;
 import core.game.Mesh;
 import core.game.MovableEntity;
 import core.game.Player;
+import core.game.Shield;
 import core.game.bullet;
 
 public class ItemHandler {
@@ -20,6 +21,8 @@ public class ItemHandler {
 	private Player player;
 	
 	private bullet b;
+	
+	private Shield s;
 
 	
 	public ItemHandler(){
@@ -62,6 +65,9 @@ public class ItemHandler {
 		} else {
 			b=null;
 		}
+		if (player.hasShield()) {
+			s = new Shield(player.getX(), player.getY(), player);
+		}
 		
 	}
 	
@@ -77,15 +83,10 @@ public class ItemHandler {
 			program.setUniform("trans", b.getPosMat());
 			b.getMesh().render();
 		}
-		/*
-		 *eventually going to figure out a way to have a list of bullets and to render each of them 
-		 *
-		for(bullet bullet: bullets) {
-			program.setUniform("trans", ((MovableEntity) bullets).getPosMat());
-			bullet.getMesh().render();
-		}
-		*/
-		
+		if (player.hasShield()) {
+			program.setUniform("trans", s.getPosMat());
+			s.getMesh().render();
+		}		
 	}
 	
 	public void clear(){

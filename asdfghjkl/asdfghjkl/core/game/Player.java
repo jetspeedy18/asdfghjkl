@@ -11,7 +11,10 @@ public class Player extends MovableEntity {
 	private int health;
 	private int dir;
 	private boolean shot;
+	private boolean sActive;
 	private static int count;
+	private static int shieldTimer;
+	private static int shieldUses;
 
 	public Player(Mesh mesh){
 		this.mesh = mesh;
@@ -24,8 +27,10 @@ public class Player extends MovableEntity {
 		health = 100;
 		dir = 0;
 		shot = false;
+		sActive = false;
 
 		health = 100;
+		shieldUses = 3;
 
 	}
 	
@@ -41,6 +46,9 @@ public class Player extends MovableEntity {
 	}
 	public boolean hasShot() {
 		return shot;
+	}
+	public boolean hasShield() {
+		return sActive;
 	}
 	public void tick(KeyMap keys, List<GameItem> items){
 		double inx = 0;
@@ -79,13 +87,24 @@ public class Player extends MovableEntity {
 			}
 		}
 		
-		for (GameItem Item: items) {
-			if (isCollided(Item)) {
-				health --;
+		if (shieldTimer>=400) {
+			this.sActive = false;
+			if (keys.getKeyPos(ACTIONS.F_KEY) && shieldUses>0) {
+				this.sActive = true;
+				shieldTimer = 0;
+				shieldUses--;
 			}
 		}
-		count ++;
+		if (!sActive) {
+			for (GameItem Item: items) {
+				if (isCollided(Item)) {
+					health --;
+				}
+			}
+		}		
 		
+		count ++;
+		shieldTimer++;
 	}
 	
 	public boolean isPlayerDeadOrJustInsane(){
@@ -95,6 +114,10 @@ public class Player extends MovableEntity {
 	public int getHealth(){
 		return health;
 
+	}
+	
+	public int getShields() {
+		return shieldUses;
 	}
 	
 	public float getMaxSpeed(){
