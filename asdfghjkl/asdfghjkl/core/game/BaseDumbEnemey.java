@@ -18,7 +18,7 @@ public class BaseDumbEnemey extends GameItem {
 	private static final Texture SLOW = new Texture(Texture.safeLoadTex("res/images/enemies/pixil-frame-0 (1).png"));
 	private static final Texture FAST = new Texture(Texture.safeLoadTex("res/images/enemies/pixil-frame-0 (2).png"));
 	
-	public BaseDumbEnemey(int speedFactor){
+	public BaseDumbEnemey(int speedFactor, float x, float y){
 		speedFactorx = r.nextInt(speedFactor);
 		speedFactory = speedFactor - speedFactorx;
 		if(speedFactor < 10){
@@ -26,10 +26,14 @@ public class BaseDumbEnemey extends GameItem {
 		} else {
 			mesh = new Mesh(FAST);
 		}
-		x = 0;
-		y = 0;
+		this.x = x;
+		this.y = y;
 		rot = 0;
 		scale = 1;
+	}
+	
+	public BaseDumbEnemey(int speedFactor){
+		this(speedFactor, 0, 0);
 	}
 	
 	@Override
@@ -58,8 +62,5 @@ public class BaseDumbEnemey extends GameItem {
 		if(ly != y) dirY = !dirY;
 	}
 	
-	public void death() {
-		
-	}
 	
 }

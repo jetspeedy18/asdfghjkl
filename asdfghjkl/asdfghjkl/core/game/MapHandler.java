@@ -29,7 +29,7 @@ public class MapHandler {
 	
 	public boolean advanceLevel(){
 		scale += 5;
-		if(scale > 20){
+		if(scale > 25){
 			return true;
 		}
 		return false;

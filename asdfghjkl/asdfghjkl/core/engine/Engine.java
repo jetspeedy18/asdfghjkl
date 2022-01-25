@@ -38,6 +38,7 @@ public class Engine implements Runnable {
 	private boolean isPlaying = false;
 	
 	private boolean win = false;
+	private boolean boss = false;
 	private boolean dead = false;
 	
 	private endScreen end;
@@ -69,8 +70,8 @@ public class Engine implements Runnable {
 		
 		camera = new Camera();
 		handler = new ItemHandler();
-		handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)));
-		handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)));
+		handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)+1));
+		handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)+1));
 		handler.queAddItem(new BasicStalkerEnemy(2, map.getMapBounds()));
 		try {
 			renderer = new Renderer(camera, handler);
@@ -119,9 +120,6 @@ public class Engine implements Runnable {
 		if(!window.isPaused() && isPlaying){
 			handler.tick(keys, camera, map);
 			dead = handler.isPlayerDeadOrJustInsane();
-			if(dead){
-				glClearColor(0.8f,0.1f,0.1f,0.0f);
-			}
 		} else {
 			screen.tick();
 		}
@@ -151,25 +149,29 @@ public class Engine implements Runnable {
 				renderer.unbind();
 				
 				counter++;
-				if(counter > map.getScale()*120){
-					if(win = map.advanceLevel()){
-						glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-					} else if(15 == map.getScale()){
-						handler.queAddItem(new Boss());
-					} else {
-						for(int i = 0; i < map.getScale()/3; i++){
-							handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)));
+				if(counter > map.getScale()*180){
+					if(!boss){
+						if(boss = map.advanceLevel()){
+							handler.queAddItem(new Boss());
+						} else {
+							for(int i = 0; i < map.getScale()/3; i++){
+								handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)+1));
+							}
 						}
+					} else {
+						win = handler.bossKill();
 					}
 				}
 			}
 				
 		} else if (win) {
+			glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 			renderer.bind();
 			renderer.resetUniforms(handler.getPlayer().getPosMat(),end.getScale());
 			end.render();
 			renderer.unbind();
 		} else if(dead) {
+			glClearColor(0.8f,0.1f,0.1f,0.0f);
 			renderer.bind();
 			renderer.resetUniforms(handler.getPlayer().getPosMat(),death.getScale());
 			death.render();

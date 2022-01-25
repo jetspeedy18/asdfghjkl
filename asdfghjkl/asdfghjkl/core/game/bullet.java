@@ -31,7 +31,7 @@ public class bullet extends MovableEntity {
 	}
 	
 
-	public void tick(List<GameItem> items){
+	public boolean tick(List<GameItem> items){
 		double tx = 0;
 		double ty = 0;
 		if(this.dir == 90){
@@ -66,7 +66,16 @@ public class bullet extends MovableEntity {
 			}
 		}
 		
-		if(byby != null) if(byby.getHealth() <= 0) items.remove(byby);
+		if(byby != null) {
+			if(byby.getHealth() <= 0){
+				if(byby instanceof Boss){
+					return true;
+				} else {
+					items.remove(byby);
+				}
+			}
+		}
+		return false;
 	}
 	
 	public boolean kill(){

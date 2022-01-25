@@ -25,6 +25,8 @@ public class ItemHandler {
 	private bullet b;
 	
 	private Shield s;
+	
+	private boolean bossKill = false;
 
 	
 	public ItemHandler(){
@@ -62,7 +64,7 @@ public class ItemHandler {
 				b = new bullet(player.getX(), player.getY(), player);
 			}
 			else if (b!=null) {
-				b.tick(items);
+				bossKill = b.tick(items);
 				if(b.kill()){
 					player.endShot();
 				}
@@ -116,6 +118,14 @@ public class ItemHandler {
 
 	public void queAddItem(GameItem item) {
 		queue.add(item);		
+	}
+	
+	public void setBossKill(boolean k){
+		bossKill = k;
+	}
+	
+	public boolean bossKill(){
+		return bossKill;
 	}
 
 }
