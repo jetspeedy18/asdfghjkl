@@ -45,10 +45,14 @@ public abstract class MovableEntity {
 	}
 	
 	public boolean isCollided(MovableEntity n) {
-		return (this.x > n.getX()-32f &&
-				this.x < n.getX()+32f &&
-				this.y > n.getY()-32f &&
-				this.y < n.getY()+32f);	
+		return (this.x > n.getX()-(32f*n.getScale()) &&
+				this.x < n.getX()+(32f*n.getScale()) &&
+				this.y > n.getY()-(32f*n.getScale()) &&
+				this.y < n.getY()+(32f*n.getScale()));	
+	}
+
+	private float getScale() {
+		return scale;
 	}
 
 }

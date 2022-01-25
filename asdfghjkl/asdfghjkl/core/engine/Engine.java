@@ -10,6 +10,7 @@ import core.engine.graphics.menus.Screen;
 import core.engine.input.KeyMap;
 import core.game.BaseDumbEnemey;
 import core.game.BasicStalkerEnemy;
+import core.game.Boss;
 import core.game.DeathThereGoodSIr;
 import core.game.MapHandler;
 import core.game.endScreen;
@@ -68,10 +69,9 @@ public class Engine implements Runnable {
 		
 		camera = new Camera();
 		handler = new ItemHandler();
-		handler.addItem(new BaseDumbEnemey(r.nextInt(20)));
-		handler.addItem(new BaseDumbEnemey(r.nextInt(20)));
-		handler.addItem(new BaseDumbEnemey(r.nextInt(10)));
-		handler.addItem(new BasicStalkerEnemy(2, map.getMapBounds()));
+		handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)));
+		handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)));
+		handler.queAddItem(new BasicStalkerEnemy(2, map.getMapBounds()));
 		try {
 			renderer = new Renderer(camera, handler);
 			
@@ -154,9 +154,11 @@ public class Engine implements Runnable {
 				if(counter > map.getScale()*120){
 					if(win = map.advanceLevel()){
 						glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+					} else if(15 == map.getScale()){
+						handler.queAddItem(new Boss());
 					} else {
-						for(int i = 0; i < map.getScale()/5; i++){
-							handler.addItem(new BaseDumbEnemey(r.nextInt(20)));
+						for(int i = 0; i < map.getScale()/3; i++){
+							handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)));
 						}
 					}
 				}

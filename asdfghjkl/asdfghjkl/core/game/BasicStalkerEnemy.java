@@ -9,26 +9,30 @@ public class BasicStalkerEnemy extends GameItem {
 	
 	private final float speedFactor;
 	
-	private Random r = new Random();
+	private static Random r = new Random();
 	
 	private static final Texture SLOW = new Texture(Texture.safeLoadTex("res/images/enemies/pixil-frame-0 (7).png"));
 	private static final Texture FAST = new Texture(Texture.safeLoadTex("res/images/enemies/pixil-frame-0 (8).png"));	
 	
-	public BasicStalkerEnemy(int speedCap, int gBound){
-		this.speedFactor = speedCap;
-		if(speedCap < 3){
+	public BasicStalkerEnemy(int speedFactor, int gBound){
+		this(speedFactor, r.nextInt(gBound)-gBound/2, r.nextInt(gBound)-gBound/2);
+		
+	}
+	
+	public BasicStalkerEnemy(int speedFactor, float x, float y) {
+		this.speedFactor = speedFactor;
+		if(speedFactor < 3){
 			mesh = new Mesh(SLOW);
 		} else {
 			mesh = new Mesh(FAST);
 		}
-		x = r.nextInt(gBound)-gBound/2;
-		y = r.nextInt(gBound)-gBound/2;
-		
+		this.x = x;
+		this.y = y;
 		rot = 0;
 		scale = 1;
 		
 	}
-	
+
 	@Override
 	public void tick(ItemHandler handler) {
 		float difX = x - handler.getPlayer().getX();

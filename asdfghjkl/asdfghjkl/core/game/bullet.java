@@ -10,6 +10,7 @@ public class bullet extends MovableEntity {
 	private float speedFactor;
 	private int dir;
 	public List<bullet> bullets;
+	private boolean done = false;
 	
 	
 	public bullet(float x, float y, Player p) {
@@ -59,9 +60,16 @@ public class bullet extends MovableEntity {
 		for (GameItem Item: items) {
 			if (isCollided(Item)) {
 				byby = Item;
+				Item.damage();
+				done = true;
+				break;
 			}
 		}
 		
-		if(byby != null) items.remove(byby);
+		if(byby != null) if(byby.getHealth() <= 0) items.remove(byby);
+	}
+	
+	public boolean kill(){
+		return done;
 	}
 }

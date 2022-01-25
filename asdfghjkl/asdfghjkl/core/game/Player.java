@@ -47,6 +47,10 @@ public class Player extends MovableEntity {
 	public boolean hasShot() {
 		return shot;
 	}
+	
+	public void endShot(){
+		shot = false;
+	}
 	public boolean hasShield() {
 		return sActive;
 	}
@@ -78,12 +82,11 @@ public class Player extends MovableEntity {
 		x += inx * speedFactor;
 		y += iny * speedFactor;
 		
-		if (count>=100) {
+		if (count>=30) {
 			this.shot = false;
 			if (keys.getKeyPos(ACTIONS.SPACE_BAR)) {
 				this.shot = true;
 				count=0;
-				System.out.println("test");
 			}
 		}
 		

@@ -6,6 +6,7 @@ import java.util.List;
 import core.engine.graphics.ShaderLoader;
 import core.engine.graphics.Texture;
 import core.engine.input.KeyMap;
+import core.game.BaseDumbEnemey;
 import core.game.GameItem;
 import core.game.MapHandler;
 import core.game.Mesh;
@@ -17,6 +18,7 @@ import core.game.bullet;
 public class ItemHandler {
 	
 	private List<GameItem> items;
+	private List<GameItem> queue;
 	
 	private Player player;
 	
@@ -61,6 +63,9 @@ public class ItemHandler {
 			}
 			else if (b!=null) {
 				b.tick(items);
+				if(b.kill()){
+					player.endShot();
+				}
 			}
 		} else {
 			b=null;
@@ -68,6 +73,13 @@ public class ItemHandler {
 		if (player.hasShield()) {
 			s = new Shield(player.getX(), player.getY(), player);
 		}
+		
+		for(GameItem item : queue){
+			items.add(item);
+		}
+		
+		queue.clear();
+		
 		
 	}
 	
@@ -91,6 +103,7 @@ public class ItemHandler {
 	
 	public void clear(){
 		items = new ArrayList<GameItem>();
+		queue = new ArrayList<GameItem>();
 	}
 	
 	public Player getPlayer(){
@@ -99,6 +112,10 @@ public class ItemHandler {
 
 	public boolean isPlayerDeadOrJustInsane() {
 		return player.isPlayerDeadOrJustInsane();
+	}
+
+	public void queAddItem(GameItem item) {
+		queue.add(item);		
 	}
 
 }
