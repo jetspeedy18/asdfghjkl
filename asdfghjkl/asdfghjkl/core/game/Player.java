@@ -38,7 +38,7 @@ public class Player extends MovableEntity {
 	public int getDir() {
 		return dir;
 	}
-	public static boolean hasShot() {
+	public boolean hasShot() {
 		return shot;
 	}
 	public void tick(KeyMap keys, List<GameItem> items){
