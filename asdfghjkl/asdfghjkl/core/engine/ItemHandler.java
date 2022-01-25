@@ -65,6 +65,7 @@ public class ItemHandler {
 			}
 			else if (b!=null) {
 				bossKill = b.tick(items);
+				b.mapClamp(map);
 				if(b.kill()){
 					player.endShot();
 				}
@@ -93,9 +94,11 @@ public class ItemHandler {
 		program.setUniform("trans", player.getPosMat());
 		player.getMesh().render();
 				
-		if (player.hasShot()) {
-			program.setUniform("trans", b.getPosMat());
-			b.getMesh().render();
+		if (player.hasShot() && b.inBounds()) {
+			if (b.clip()) {
+				program.setUniform("trans", b.getPosMat());
+				b.getMesh().render();
+			}
 		}
 		if (player.hasShield()) {
 			program.setUniform("trans", s.getPosMat());
