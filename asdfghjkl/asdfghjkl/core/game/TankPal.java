@@ -32,8 +32,8 @@ public class TankPal extends GameItem{
 		
 		count ++;
 		
-		if(count%15==0){
-			handler.addBullet(new bullet(x, y, ((count/15))*19, false));
+		if(count%45==0){
+			handler.addBullet(new bullet(x, y, (count/45)*19, false));
 		}
 	}
 

@@ -35,8 +35,8 @@ public class EkranoPal extends GameItem {
 		}
 		count ++;
 		
-		if(count%15==0){
-			handler.addBullet(new bullet(x, y, ((count/10)%4)*84, false));
+		if(count%26==0){
+			handler.addBullet(new bullet(x, y, (count/26)*84, false));
 		}
 	}
 
