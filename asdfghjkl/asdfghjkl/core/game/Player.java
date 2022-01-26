@@ -2,6 +2,7 @@ package core.game;
 
 import java.util.List;
 
+import core.engine.ItemHandler;
 import core.engine.input.KeyMap;
 import core.engine.input.KeyMap.ACTIONS;
 
@@ -68,11 +69,16 @@ public class Player extends MovableEntity {
 		this.shot = false;
 		
 	}
+	
+	public void detach(){
+		cbc--;
+	}
+	
 	public boolean hasShield() {
 		return sActive;
 	}
 	
-	public boolean tick(KeyMap keys, List<GameItem> items){
+	public boolean tick(KeyMap keys, List<GameItem> items, ItemHandler handler){
 		shrinkcount --;
 		if(shrinkcount < 0) scale = 1;
 		
@@ -104,23 +110,19 @@ public class Player extends MovableEntity {
 		x += inx * speedFactor;
 		y += iny * speedFactor;
 		
-		if (count >= 10) {
-			this.shot = false;
-			if (keys.getKeyPos(ACTIONS.SPACE_BAR) && !shotl) {
+		if (keys.getKeyPos(ACTIONS.SPACE_BAR) && !shotl) {
+			this.shot = true;
+			shotl = true;
+			if(cbc < 3){
+				handler.addBullet(new bullet(x, y, dir, true));
 				cbc++;
-				this.shot = true;
-				shotl = true;
-				ammo++;
-				if (ammo >=4) {
-					ammo = 1;
-				}
-				count=0;
-			}
-			else if(!keys.getKeyPos(ACTIONS.SPACE_BAR)){
-				shotl = false;
-				this.shot = false;
 			}
 		}
+		else if(!keys.getKeyPos(ACTIONS.SPACE_BAR)){
+			shotl = false;
+			this.shot = false;
+		}
+	
 		
 		
 		

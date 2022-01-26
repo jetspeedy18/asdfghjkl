@@ -24,12 +24,9 @@ public class ItemHandler {
 	
 	private List<GameItem> items;
 	private List<GameItem> queue;
+	private List<bullet> bullets;
 	
 	private Player player;
-	
-	private bullet b1;
-	private bullet b2;
-	private bullet b3;
 	
 	private Shield s;
 	
@@ -47,9 +44,6 @@ public class ItemHandler {
 		clear();
 		try {
 			player = new Player(new Mesh(new Texture(Texture.loadTex("res/images/Rat Knight No Background.png"))));
-			b1 = new bullet(player.getX(), player.getY(), player.getDir());
-			b2 = new bullet(player.getX(), player.getY(), player.getDir());
-			b3 = new bullet(player.getX(), player.getY(), player.getDir());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -73,69 +67,25 @@ public class ItemHandler {
 			item.tick(this);
 			item.mapClamp(map);
 		}
-		player.tick(keys, items);
+		player.tick(keys, items, this);
 		player.mapClamp(map);
 		camera.tick(player.getX(), player.getY(), player.getMaxSpeed());
 		
-		if (player.hasShot()) {		
-			if (player.getAmmo() == 1) {
-				b1.setrBullet(true);
-			}
-			else if (player.getAmmo() == 2) {
-				b2.setrBullet(true);
-			}
-			else if (player.getAmmo() == 3) {
-				b3.setrBullet(true);
-			}
-			
-			if (b1.getrBullet()) {
-				if (!b1.getInMotion()) {
-					b1.go(player.getX(), player.getY(), player.getDir());
-					b1.setInMotion(true);
-				} else { 
-					bossKill = b1.tick(items, this);
-					b1.mapClamp(map);
-					if(b1.kill()){
-						player.endShot(b1);
-					}
-				}
-			}
-			else if (b2.getrBullet()) {
-				if (!b2.getInMotion()) {
-					b2.go(player.getX(), player.getY(), player.getDir());
-					b2.setInMotion(true);
-				} else { 
-					bossKill = b2.tick(items, this);
-					b2.mapClamp(map);
-					if(b2.kill()){
-						player.endShot(b2);
-					}
-				}
-			}
-			else if (b3.getrBullet()) {
-				if (!b3.getInMotion()) {
-					b3.go(player.getX(), player.getY(), player.getDir());
-					b3.setInMotion(true);
-				} else { 
-					bossKill = b3.tick(items, this);
-					b3.mapClamp(map);
-					if(b3.kill()){
-						player.endShot(b3);
-					}
+		bullet byby = null;
+		
+		for(bullet b : bullets){
+			bossKill = b.tick(items, this);
+			b.mapClamp(map);
+			if(b.kill()){
+				byby = b;
+				if(b.playerOwner()){
+					player.detach();
 				}
 			}
 		}
-		else {
-			if (player.getAmmo() == 1) {
-				b1.setrBullet(false);
-			}
-			if (player.getAmmo() == 2) {
-				b2.setrBullet(false);
-			}
-			if (player.getAmmo() == 3) {
-				b3.setrBullet(false);
-			}
-		}
+		
+		if(byby != null) bullets.remove(byby);
+	
 		
 		
 		if (player.hasShield()) {
@@ -159,19 +109,10 @@ public class ItemHandler {
 		program.setUniform("trans", player.getPosMat());
 		player.getMesh().render();
 				
-		if (player.hasShot() && b1.inBounds() && player.getAmmo() == 1) {
-				program.setUniform("trans", b1.getPosMat());
-				b1.getMesh().render();
-			}
-		if (player.hasShot() && b2.inBounds() && player.getAmmo() == 2) {
-			program.setUniform("trans", b2.getPosMat());
-			b2.getMesh().render();
-		}
-		if (player.hasShot() && b3.inBounds() && player.getAmmo() == 3) {
-			program.setUniform("trans", b3.getPosMat());
-			b3.getMesh().render();
-		}
-		
+		for(bullet b : bullets){
+			program.setUniform("trans", b.getPosMat());
+			b.getMesh().render();
+		}		
 		
 		if (player.hasShield()) {
 			program.setUniform("trans", s.getPosMat());
@@ -182,6 +123,7 @@ public class ItemHandler {
 	public void clear(){
 		items = new ArrayList<GameItem>();
 		queue = new ArrayList<GameItem>();
+		bullets = new ArrayList<bullet>();
 	}
 	
 	public Player getPlayer(){
@@ -223,13 +165,16 @@ public class ItemHandler {
 			canTank = false;
 		}
 		
-		
-		
 		items.remove(byby);
 		
 	}
 
 	public boolean empty(){
 		return items.size()+queue.size() == (canTank ? (canSea ? 0 : 1) : (canSea ? 1 : 2));
+	}
+
+	public void addBullet(bullet b) {
+		bullets.add(b);
+		
 	}
 }

@@ -14,9 +14,10 @@ public class bullet extends MovableEntity {
 	private boolean inBounds;
 	private boolean rbullet;
 	private boolean inMotion;
+	private final boolean playerOwner;
 	
 	
-	public bullet(float x, float y, int dir) {
+	public bullet(float x, float y, int dir, boolean playerOwner) {
 		this.mesh = new Mesh(new Texture(Texture.safeLoadTex("res/images/bullet.png")));
 		this.x = x;
 		this.y = y;
@@ -27,6 +28,7 @@ public class bullet extends MovableEntity {
 		inBounds = true;
 		rbullet = false;
 		inMotion = false;
+		this.playerOwner = playerOwner;
 	}
 	
 	public void setrBullet(boolean x) {
@@ -123,5 +125,9 @@ public class bullet extends MovableEntity {
 	}
 	public void setInMotion(boolean x) {
 		inMotion = x;
+	}
+
+	public boolean playerOwner() {
+		return playerOwner;
 	}
 }
