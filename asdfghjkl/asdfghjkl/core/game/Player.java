@@ -112,9 +112,7 @@ public class Player extends MovableEntity {
 		
 
 	
-			this.shot = false;
-			if (keys.getKeyPos(ACTIONS.SPACE_BAR) && !shotl) {
-
+		this.shot = false;
 		if (keys.getKeyPos(ACTIONS.SPACE_BAR) && !shotl) {
 			this.shot = true;
 			shotl = true;
@@ -187,20 +185,20 @@ public class Player extends MovableEntity {
 					break;
 				}
 			}
-			if(byby != null) {
-				if(byby.getHealth() <= 0){
-					if(byby instanceof Boss){
-						return true;
-					} else {
-						items.remove(byby);
+				if(byby != null) {
+					if(byby.getHealth() <= 0){
+						if(byby instanceof Boss){
+							return true;
+						} else {
+							items.remove(byby);
+						}
 					}
 				}
-			}
-		}
 			}
 		count ++;
 		shieldTimer++;
 		return true;
+			
 			
 		
 	
