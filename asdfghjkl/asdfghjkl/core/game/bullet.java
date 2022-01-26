@@ -11,8 +11,9 @@ public class bullet extends MovableEntity {
 	private int dir;
 	public List<bullet> bullets;
 	private boolean done = false;
-	private int ammo;
 	private boolean inBounds;
+	private boolean rbullet;
+	private boolean inMotion;
 	
 	
 	public bullet(float x, float y, Player p) {
@@ -23,9 +24,18 @@ public class bullet extends MovableEntity {
 		scale = 1;
 		speedFactor = 20;
 		dir = this.dir=p.getDir();
-		ammo = 3;
 		inBounds = true;
+		rbullet = false;
+		inMotion = false;
 	}
+	
+	public void setrBullet(boolean x) {
+		this.rbullet = x;
+	}
+	public boolean getrBullet() {
+		return rbullet;
+	}
+
 	
 	public void setX(double x) {
 		this.x = (float) x;
@@ -34,6 +44,11 @@ public class bullet extends MovableEntity {
 		this.y = (float) d;
 	}
 	
+	public void go(float x, float y, Player p) {
+		this.x = x;
+		this.y = y;
+		this.dir=p.getDir();
+	}
 
 	public boolean tick(List<GameItem> items){
 		double tx = 0;
@@ -81,6 +96,7 @@ public class bullet extends MovableEntity {
 		}
 		return false;
 	}
+	
 	@Override
 	public void mapClamp(MapHandler map){
 		double lx = x;
@@ -94,15 +110,15 @@ public class bullet extends MovableEntity {
 		return this.inBounds;
 	}
 	
-	public boolean clip() {
-		if (ammo<=0) {
-			return false;
-		} else {
-			return true;
-		}
-	}
 	
 	public boolean kill(){
 		return done;
+	}
+
+	public boolean getInMotion() {
+		return this.inMotion;
+	}
+	public void setInMotion(boolean x) {
+		this.inMotion = x;
 	}
 }

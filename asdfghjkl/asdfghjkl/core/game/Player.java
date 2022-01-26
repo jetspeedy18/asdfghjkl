@@ -32,7 +32,7 @@ public class Player extends MovableEntity {
 
 		health = 169;
 		shieldUses = 3;
-		ammo = 3;
+		ammo = 1;
 
 	}
 	
@@ -47,11 +47,12 @@ public class Player extends MovableEntity {
 		return dir;
 	}
 	public boolean hasShot() {
-		ammo--;
 		return shot;
 	}
 	
-	public void endShot(){
+	public void endShot(bullet b){
+		b.setrBullet(false);
+		b.setInMotion(false);
 		shot = false;
 	}
 	public boolean hasShield() {
@@ -90,6 +91,10 @@ public class Player extends MovableEntity {
 			this.shot = false;
 			if (keys.getKeyPos(ACTIONS.SPACE_BAR)) {
 				this.shot = true;
+				ammo++;
+				if (ammo >=4) {
+					ammo = 1;
+				}
 				count=0;
 			}
 		}
@@ -149,6 +154,10 @@ public class Player extends MovableEntity {
 	
 	public float getMaxSpeed(){
 		return speedFactor;
+	}
+
+	public int getAmmo() {
+		return ammo;
 	}
 	
 }
