@@ -99,7 +99,8 @@ public class Player extends MovableEntity {
 		x += inx * speedFactor;
 		y += iny * speedFactor;
 		
-	
+		if (count >= 10) {
+			this.shot = false;
 			if (keys.getKeyPos(ACTIONS.SPACE_BAR) && !shotl) {
 				cbc++;
 				this.shot = true;
@@ -114,6 +115,7 @@ public class Player extends MovableEntity {
 				shotl = false;
 				this.shot = false;
 			}
+		}
 		
 		
 		
