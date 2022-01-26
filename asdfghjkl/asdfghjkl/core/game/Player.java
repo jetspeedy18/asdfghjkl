@@ -109,11 +109,8 @@ public class Player extends MovableEntity {
 		}
 		else if(!keys.getKeyPos(ACTIONS.SPACE_BAR)){
 			shotl = false;
-			this.shot = false;
+			shot = false;
 		}
-	
-		
-		
 		
 		
 		if (shieldTimer>=200) {

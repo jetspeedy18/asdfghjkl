@@ -148,8 +148,8 @@ public class Engine implements Runnable {
 				renderer.unbind();
 				
 				counter++;
-				if(handler.empty()) counter = map.getScale()*map.getScale()*map.getScale()*2 + 1;
-				if(counter > map.getScale()*map.getScale()*map.getScale()*2){
+				if(handler.empty()) counter = map.getScale()*map.getScale()*map.getScale() + 1;
+				if(counter > map.getScale()*map.getScale()*map.getScale()){
 					if(!boss){
 						if(boss = map.advanceLevel()){
 							handler.queAddItem(new Boss());
