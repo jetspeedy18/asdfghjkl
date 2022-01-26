@@ -149,7 +149,7 @@ public class ItemHandler {
 	public void kill(GameItem byby) {
 		float lx = byby.getX();
 		float ly = byby.getY();
-		int drop = 16;// r.nextInt(20);
+		int drop = r.nextInt(40);
 		if(drop < 5){
 			items.add(new HealthDrop(lx, ly));
 		} else if(drop < 10){

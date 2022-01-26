@@ -156,7 +156,7 @@ public class Engine implements Runnable {
 							handler.queAddItem(new Boss());
 						} else {
 							for(int i = 0; i < map.getScale()*map.getScale()/5; i++){
-								if(r.nextInt(15) == 3){
+								if(r.nextInt(10) == 3){
 									handler.queAddItem(new BasicStalkerEnemy(r.nextInt(5)+2,map.getMapBounds()));
 								} else {
 									handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)+1));

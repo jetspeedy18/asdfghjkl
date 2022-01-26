@@ -8,8 +8,6 @@ import core.engine.graphics.Texture;
 public class TankPal extends GameItem{
 
 	private int count;
-
-	private Random r = new Random();
 	
 	public TankPal(float x, float y){
 		mesh = new Mesh(new Texture(Texture.safeLoadTex("res/images/testpanzernobg.png")));
