@@ -48,7 +48,12 @@ public class bullet extends MovableEntity {
 		this.x = x;
 		this.y = y;
 		this.dir=p.getDir();
+
 		System.out.println("went");
+
+		inMotion = true;
+		done = false;
+
 	}
 
 	public boolean tick(List<GameItem> items){
@@ -104,8 +109,7 @@ public class bullet extends MovableEntity {
 		double ly = y;
 		super.mapClamp(map);
 		
-		if(lx != x || ly != y) inBounds = false;
-		else inBounds = true;
+		if(lx != x || ly != y) done = true;
 	}
 	public boolean inBounds() {
 		return this.inBounds;
@@ -117,9 +121,9 @@ public class bullet extends MovableEntity {
 	}
 
 	public boolean getInMotion() {
-		return this.inMotion;
+		return inMotion;
 	}
 	public void setInMotion(boolean x) {
-		this.inMotion = x;
+		inMotion = x;
 	}
 }
