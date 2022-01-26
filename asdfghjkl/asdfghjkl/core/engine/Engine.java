@@ -142,6 +142,10 @@ public class Engine implements Runnable {
 	
 	private void render(){
 
+		if(dead){
+			glClearColor(0.8f,0.1f,0.1f,0.0f);
+		}
+		
 		glClear(GL_COLOR_BUFFER_BIT);
 		
 		if(!win && !dead){
@@ -194,7 +198,6 @@ public class Engine implements Runnable {
 			renderer.unbind();
 		} 
 		if(dead && !isPlaying) {
-			glClearColor(0.8f,0.1f,0.1f,0.0f);
 			renderer.bind();
 			renderer.resetUniforms(handler.getPlayer().getPosMat(),death.getScale());
 			death.render();
