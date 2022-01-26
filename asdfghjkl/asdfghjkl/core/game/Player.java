@@ -110,7 +110,7 @@ public class Player extends MovableEntity {
 				}
 				count=0;
 			}
-			else {
+			else if(!keys.getKeyPos(ACTIONS.SPACE_BAR)){
 				shotl = false;
 				this.shot = false;
 			}
