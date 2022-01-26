@@ -18,6 +18,7 @@ public class Player extends MovableEntity {
 	private static int shieldUses;
 	private static int ammo;
 	private static int cbc;
+	private int shrinkcount;
 
 	public Player(Mesh mesh){
 		this.mesh = mesh;
@@ -39,6 +40,7 @@ public class Player extends MovableEntity {
 		ammo = 1;
 		cbc=0;
 
+		shrinkcount = 0;
 	}
 	
 	public float getX(){
@@ -71,6 +73,9 @@ public class Player extends MovableEntity {
 	}
 	
 	public boolean tick(KeyMap keys, List<GameItem> items){
+		shrinkcount --;
+		if(shrinkcount < 0) scale = 1;
+		
 		double inx = 0;
 		double iny = 0;
 		int tcbc = cbc;	
@@ -129,17 +134,44 @@ public class Player extends MovableEntity {
 			}
 		}
 		if (!sActive) {
+			GameItem byby = null;
 			for (GameItem Item: items) {
 				if (isCollided(Item)) {
-					health --;
+					if(Item.getCollect()){
+						if(Item instanceof ShieldDrop){
+							shieldUses++;
+						} else if(Item instanceof HealthDrop){
+							health += 26;
+						} else if(Item instanceof ShrinkDrop){
+							scale = 0.5f;
+							shrinkcount = 180;
+						}
+						byby = Item;
+					} else{
+						health --;
+					}
 				}
 			}
+			
+			if(byby != null) items.remove(byby);
+			
 		}	else {
 			GameItem byby = null;
 			
 			for (GameItem Item: items) {
 				if (isCollided(Item)) {
 					byby = Item;
+					if(Item.getCollect()) {
+						if(Item instanceof ShieldDrop){
+							shieldUses++;
+						} else if(Item instanceof HealthDrop){
+							health += 26;
+						} else if(Item instanceof ShrinkDrop){
+							scale = 0.5f;
+							shrinkcount = 180;
+						}
+						
+					}
 					Item.damage();
 					break;
 				}

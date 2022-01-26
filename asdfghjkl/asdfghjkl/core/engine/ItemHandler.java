@@ -2,17 +2,22 @@ package core.engine;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import core.engine.graphics.ShaderLoader;
 import core.engine.graphics.Texture;
 import core.engine.input.KeyMap;
 import core.game.BaseDumbEnemey;
 import core.game.GameItem;
+import core.game.HealthDrop;
 import core.game.MapHandler;
 import core.game.Mesh;
 import core.game.MovableEntity;
 import core.game.Player;
 import core.game.Shield;
+import core.game.ShieldDrop;
+import core.game.ShrinkDrop;
+import core.game.TankPal;
 import core.game.bullet;
 
 public class ItemHandler {
@@ -28,13 +33,20 @@ public class ItemHandler {
 	
 	private Shield s;
 	
+	private boolean canTank = true;
+	private boolean canSea = true;
+	
+	private Random r = new Random();
+	
 	private boolean bossKill = false;
+	
+	private TankPal pal;
 
 	
 	public ItemHandler(){
 		clear();
 		try {
-			player = new Player(new Mesh(new Texture(Texture.loadTex("res/images/test.jpg"))));
+			player = new Player(new Mesh(new Texture(Texture.loadTex("res/images/Rat Knight No Background.png"))));
 			b1 = new bullet(player.getX(), player.getY(), player);
 			b2 = new bullet(player.getX(), player.getY(), player);
 			b3 = new bullet(player.getX(), player.getY(), player);
@@ -81,7 +93,7 @@ public class ItemHandler {
 					b1.go(player.getX(), player.getY(), player);
 					b1.setInMotion(true);
 				} else { 
-					bossKill = b1.tick(items);
+					bossKill = b1.tick(items, this);
 					b1.mapClamp(map);
 					if(b1.kill()){
 						player.endShot(b1);
@@ -93,7 +105,7 @@ public class ItemHandler {
 					b2.go(player.getX(), player.getY(), player);
 					b2.setInMotion(true);
 				} else { 
-					bossKill = b2.tick(items);
+					bossKill = b2.tick(items, this);
 					b2.mapClamp(map);
 					if(b2.kill()){
 						player.endShot(b2);
@@ -105,7 +117,7 @@ public class ItemHandler {
 					b3.go(player.getX(), player.getY(), player);
 					b3.setInMotion(true);
 				} else { 
-					bossKill = b3.tick(items);
+					bossKill = b3.tick(items, this);
 					b3.mapClamp(map);
 					if(b3.kill()){
 						player.endShot(b3);
@@ -192,4 +204,32 @@ public class ItemHandler {
 		return bossKill;
 	}
 
+	public void kill(GameItem byby) {
+		float lx = byby.getX();
+		float ly = byby.getY();
+		int drop = 16;// r.nextInt(20);
+		if(drop < 5){
+			items.add(new HealthDrop(lx, ly));
+		} else if(drop < 10){
+			items.add(new ShieldDrop(lx, ly));
+		} else if(drop < 15){
+			items.add(new ShrinkDrop(lx, ly));
+		} else if(drop == 16){
+			if(canTank) items.add(pal = new TankPal(lx, ly));
+			else if(canSea) {
+				items.add(new EkranoPal(lx, ly, pal));
+				canSea = false;
+			}
+			canTank = false;
+		}
+		
+		
+		
+		items.remove(byby);
+		
+	}
+
+	public boolean empty(){
+		return items.size()+queue.size() == (canTank ? (canSea ? 0 : 1) : (canSea ? 1 : 2));
+	}
 }

@@ -2,9 +2,9 @@ package core.game;
 
 import java.util.List;
 
+import core.engine.EkranoPal;
+import core.engine.ItemHandler;
 import core.engine.graphics.Texture;
-import core.engine.input.KeyMap;
-import core.engine.input.KeyMap.ACTIONS;
 
 public class bullet extends MovableEntity {
 	private float speedFactor;
@@ -54,7 +54,7 @@ public class bullet extends MovableEntity {
 
 	}
 
-	public boolean tick(List<GameItem> items){
+	public boolean tick(List<GameItem> items, ItemHandler handler){
 		double tx = 0;
 		double ty = 0;
 		if(this.dir == 90){
@@ -93,8 +93,8 @@ public class bullet extends MovableEntity {
 			if(byby.getHealth() <= 0){
 				if(byby instanceof Boss){
 					return true;
-				} else {
-					items.remove(byby);
+				} else if(!(byby instanceof HealthDrop) && !(byby instanceof ShieldDrop) && !(byby instanceof ShrinkDrop) && !(byby instanceof TankPal) && !(byby instanceof  EkranoPal)){
+					handler.kill(byby);
 				}
 			}
 		}
