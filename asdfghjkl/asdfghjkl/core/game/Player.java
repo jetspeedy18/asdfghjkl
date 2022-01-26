@@ -61,15 +61,6 @@ public class Player extends MovableEntity {
 		return this.cbc;
 	}
 	
-	
-	public void endShot(bullet b){
-		b.setrBullet(false);
-		b.setInMotion(false);
-		cbc--;
-		this.shot = false;
-		
-	}
-	
 	public void detach(){
 		cbc--;
 	}

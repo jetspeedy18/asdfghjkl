@@ -9,11 +9,7 @@ import core.engine.graphics.Texture;
 public class bullet extends MovableEntity {
 	private float speedFactor;
 	private int dir;
-	public List<bullet> bullets;
 	private boolean done = false;
-	private boolean inBounds;
-	private boolean rbullet;
-	private boolean inMotion;
 	private final boolean playerOwner;
 	
 	
@@ -25,19 +21,8 @@ public class bullet extends MovableEntity {
 		scale = 1;
 		speedFactor = 20;
 		this.dir = dir;
-		inBounds = true;
-		rbullet = false;
-		inMotion = false;
 		this.playerOwner = playerOwner;
 	}
-	
-	public void setrBullet(boolean x) {
-		this.rbullet = x;
-	}
-	public boolean getrBullet() {
-		return rbullet;
-	}
-
 	
 	public void setX(double x) {
 		this.x = (float) x;
@@ -51,7 +36,6 @@ public class bullet extends MovableEntity {
 		this.y = y;
 		this.dir=dir;
 
-		inMotion = true;
 		done = false;
 
 	}
@@ -86,6 +70,11 @@ public class bullet extends MovableEntity {
 			if (isCollided(Item)) {
 				byby = Item;
 				Item.damage();
+				if(!playerOwner){
+					if(Item instanceof TankPal || Item instanceof EkranoPal){
+						break;
+					}
+				}
 				done = true;
 				break;
 			}
@@ -111,21 +100,12 @@ public class bullet extends MovableEntity {
 		
 		if(lx != x || ly != y) done = true;
 	}
-	public boolean inBounds() {
-		return this.inBounds;
-	}
-	
+
 	
 	public boolean kill(){
 		return done;
 	}
 
-	public boolean getInMotion() {
-		return inMotion;
-	}
-	public void setInMotion(boolean x) {
-		inMotion = x;
-	}
 
 	public boolean playerOwner() {
 		return playerOwner;

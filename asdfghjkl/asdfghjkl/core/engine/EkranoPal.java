@@ -4,10 +4,13 @@ import core.engine.graphics.Texture;
 import core.game.GameItem;
 import core.game.Mesh;
 import core.game.TankPal;
+import core.game.bullet;
 
 public class EkranoPal extends GameItem {
 
 	private TankPal pal;
+	
+	private int count;
 	
 	public EkranoPal(float x, float y, TankPal pal){
 		mesh = new Mesh(new Texture(Texture.safeLoadTex("res/images/Lun Class No BG.png")));
@@ -27,8 +30,13 @@ public class EkranoPal extends GameItem {
 		float ispify = (float) Math.sqrt(difX*difX+difY*difY)+10;
 		
 		if(ispify > 100){
-			x -= difX/ispify*8;
-			y -= difY/ispify*8;
+			x -= difX/ispify*4;
+			y -= difY/ispify*4;
+		}
+		count ++;
+		
+		if(count%15==0){
+			handler.addBullet(new bullet(x, y, ((count/10)%4)*90, false));
 		}
 	}
 
