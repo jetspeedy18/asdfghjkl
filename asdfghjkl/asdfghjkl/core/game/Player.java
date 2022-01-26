@@ -101,19 +101,28 @@ public class Player extends MovableEntity {
 		x += inx * speedFactor;
 		y += iny * speedFactor;
 		
+
+	
+			this.shot = false;
+			if (keys.getKeyPos(ACTIONS.SPACE_BAR) && !shotl) {
+
 		if (keys.getKeyPos(ACTIONS.SPACE_BAR) && !shotl) {
 			this.shot = true;
 			shotl = true;
 			if(cbc < 3){
 				handler.addBullet(new bullet(x, y, dir, true));
+
 				cbc++;
 			}
+
+
 		}
 		else if(!keys.getKeyPos(ACTIONS.SPACE_BAR)){
 			shotl = false;
 			this.shot = false;
 		}
 	
+
 		
 		
 		
@@ -179,10 +188,13 @@ public class Player extends MovableEntity {
 				}
 			}
 		}
-		
+			}
 		count ++;
 		shieldTimer++;
 		return true;
+			
+		
+	
 	}
 	
 	public boolean isPlayerDeadOrJustInsane(){
