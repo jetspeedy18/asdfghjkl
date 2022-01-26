@@ -2,6 +2,7 @@ package core.game;
 
 import java.util.List;
 
+import core.engine.ItemHandler;
 import core.engine.input.KeyMap;
 import core.engine.input.KeyMap.ACTIONS;
 
@@ -18,6 +19,7 @@ public class Player extends MovableEntity {
 	private static int shieldUses;
 	private static int ammo;
 	private static int cbc;
+	private int shrinkcount;
 
 	public Player(Mesh mesh){
 		this.mesh = mesh;
@@ -39,6 +41,7 @@ public class Player extends MovableEntity {
 		ammo = 1;
 		cbc=0;
 
+		shrinkcount = 0;
 	}
 	
 	public float getX(){
@@ -66,11 +69,19 @@ public class Player extends MovableEntity {
 		this.shot = false;
 		
 	}
+	
+	public void detach(){
+		cbc--;
+	}
+	
 	public boolean hasShield() {
 		return sActive;
 	}
 	
-	public boolean tick(KeyMap keys, List<GameItem> items){
+	public boolean tick(KeyMap keys, List<GameItem> items, ItemHandler handler){
+		shrinkcount --;
+		if(shrinkcount < 0) scale = 1;
+		
 		double inx = 0;
 		double iny = 0;
 		int tcbc = cbc;	
@@ -99,23 +110,29 @@ public class Player extends MovableEntity {
 		x += inx * speedFactor;
 		y += iny * speedFactor;
 		
+<<<<<<< HEAD
 	
 			this.shot = false;
 			if (keys.getKeyPos(ACTIONS.SPACE_BAR) && !shotl) {
+=======
+		if (keys.getKeyPos(ACTIONS.SPACE_BAR) && !shotl) {
+			this.shot = true;
+			shotl = true;
+			if(cbc < 3){
+				handler.addBullet(new bullet(x, y, dir, true));
+>>>>>>> 32e204437e8b748c01a4d15fa879a4000a8db0f4
 				cbc++;
-				this.shot = true;
-				shotl = true;
-				ammo++;
-				if (ammo >=4) {
-					ammo = 1;
-				}
-				count=0;
 			}
-			else if(!keys.getKeyPos(ACTIONS.SPACE_BAR)){
-				shotl = false;
-				this.shot = false;
-			}
+<<<<<<< HEAD
 		
+=======
+		}
+		else if(!keys.getKeyPos(ACTIONS.SPACE_BAR)){
+			shotl = false;
+			this.shot = false;
+		}
+	
+>>>>>>> 32e204437e8b748c01a4d15fa879a4000a8db0f4
 		
 		
 		
@@ -129,17 +146,44 @@ public class Player extends MovableEntity {
 			}
 		}
 		if (!sActive) {
+			GameItem byby = null;
 			for (GameItem Item: items) {
 				if (isCollided(Item)) {
-					health --;
+					if(Item.getCollect()){
+						if(Item instanceof ShieldDrop){
+							shieldUses++;
+						} else if(Item instanceof HealthDrop){
+							health += 26;
+						} else if(Item instanceof ShrinkDrop){
+							scale = 0.5f;
+							shrinkcount = 180;
+						}
+						byby = Item;
+					} else{
+						health --;
+					}
 				}
 			}
+			
+			if(byby != null) items.remove(byby);
+			
 		}	else {
 			GameItem byby = null;
 			
 			for (GameItem Item: items) {
 				if (isCollided(Item)) {
 					byby = Item;
+					if(Item.getCollect()) {
+						if(Item instanceof ShieldDrop){
+							shieldUses++;
+						} else if(Item instanceof HealthDrop){
+							health += 26;
+						} else if(Item instanceof ShrinkDrop){
+							scale = 0.5f;
+							shrinkcount = 180;
+						}
+						
+					}
 					Item.damage();
 					break;
 				}
