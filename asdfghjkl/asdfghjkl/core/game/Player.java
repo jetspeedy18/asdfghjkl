@@ -11,6 +11,7 @@ public class Player extends MovableEntity {
 	private int health;
 	private int dir;
 	private boolean shot;
+	private boolean shotl;
 	private boolean sActive;
 	private static int count;
 	private static int shieldTimer;
@@ -29,6 +30,7 @@ public class Player extends MovableEntity {
 		health = 100;
 		dir = 0;
 		shot = false;
+		shotl = false;
 		sActive = false;
 
 		health = 169;
@@ -60,7 +62,6 @@ public class Player extends MovableEntity {
 	public void endShot(bullet b){
 		b.setrBullet(false);
 		b.setInMotion(false);
-		System.out.println("test");
 		cbc--;
 		this.shot = false;
 		
@@ -99,9 +100,10 @@ public class Player extends MovableEntity {
 		y += iny * speedFactor;
 		
 	
-			if (keys.getKeyPos(ACTIONS.SPACE_BAR)) {
+			if (keys.getKeyPos(ACTIONS.SPACE_BAR) && !shotl) {
 				cbc++;
 				this.shot = true;
+				shotl = true;
 				ammo++;
 				if (ammo >=4) {
 					ammo = 1;
@@ -109,6 +111,7 @@ public class Player extends MovableEntity {
 				count=0;
 			}
 			else {
+				shotl = false;
 				this.shot = false;
 			}
 		
