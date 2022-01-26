@@ -39,5 +39,10 @@ public class EkranoPal extends GameItem {
 			handler.addBullet(new bullet(x, y, (count/26)*84, false));
 		}
 	}
+	
+	@Override
+	public void damage(){
+		health = 100;
+	}
 
 }

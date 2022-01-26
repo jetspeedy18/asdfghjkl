@@ -36,5 +36,10 @@ public class TankPal extends GameItem{
 			handler.addBullet(new bullet(x, y, (count/45)*19, false));
 		}
 	}
+	
+	@Override
+	public void damage(){
+		health = 100;
+	}
 
 }

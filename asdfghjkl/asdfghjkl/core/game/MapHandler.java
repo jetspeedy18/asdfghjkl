@@ -4,7 +4,7 @@ import core.engine.graphics.Texture;
 
 public class MapHandler {
 	
-	private int scale = 5;
+	private int scale;
 	private int mapTexId;
 	
 	private Mesh MapM;
@@ -20,6 +20,12 @@ public class MapHandler {
 		}
 		MapT = new Texture(mapTexId);
 		MapM = new Mesh(2, 2, MapT);
+		
+		scale = 5;
+	}
+	
+	public void reset(){
+		scale = 5;
 	}
 	
 	
