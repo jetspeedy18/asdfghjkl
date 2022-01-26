@@ -2,9 +2,9 @@ package core.game;
 
 import java.util.List;
 
+import core.engine.EkranoPal;
+import core.engine.ItemHandler;
 import core.engine.graphics.Texture;
-import core.engine.input.KeyMap;
-import core.engine.input.KeyMap.ACTIONS;
 
 public class bullet extends MovableEntity {
 	private float speedFactor;
@@ -14,19 +14,21 @@ public class bullet extends MovableEntity {
 	private boolean inBounds;
 	private boolean rbullet;
 	private boolean inMotion;
+	private final boolean playerOwner;
 	
 	
-	public bullet(float x, float y, Player p) {
+	public bullet(float x, float y, int dir, boolean playerOwner) {
 		this.mesh = new Mesh(new Texture(Texture.safeLoadTex("res/images/bullet.png")));
 		this.x = x;
 		this.y = y;
 		rot = 0;
 		scale = 1;
 		speedFactor = 20;
-		dir = this.dir=p.getDir();
+		this.dir = dir;
 		inBounds = true;
 		rbullet = false;
 		inMotion = false;
+		this.playerOwner = playerOwner;
 	}
 	
 	public void setrBullet(boolean x) {
@@ -44,17 +46,17 @@ public class bullet extends MovableEntity {
 		this.y = (float) d;
 	}
 	
-	public void go(float x, float y, Player p) {
+	public void go(float x, float y, int dir) {
 		this.x = x;
 		this.y = y;
-		this.dir=p.getDir();
+		this.dir=dir;
 
 		inMotion = true;
 		done = false;
 
 	}
 
-	public boolean tick(List<GameItem> items){
+	public boolean tick(List<GameItem> items, ItemHandler handler){
 		double tx = 0;
 		double ty = 0;
 		if(this.dir == 90){
@@ -93,8 +95,8 @@ public class bullet extends MovableEntity {
 			if(byby.getHealth() <= 0){
 				if(byby instanceof Boss){
 					return true;
-				} else {
-					items.remove(byby);
+				} else if(!(byby instanceof HealthDrop) && !(byby instanceof ShieldDrop) && !(byby instanceof ShrinkDrop) && !(byby instanceof TankPal) && !(byby instanceof  EkranoPal)){
+					handler.kill(byby);
 				}
 			}
 		}
@@ -123,5 +125,9 @@ public class bullet extends MovableEntity {
 	}
 	public void setInMotion(boolean x) {
 		inMotion = x;
+	}
+
+	public boolean playerOwner() {
+		return playerOwner;
 	}
 }
