@@ -7,12 +7,10 @@ import java.util.Random;
 import core.engine.graphics.ShaderLoader;
 import core.engine.graphics.Texture;
 import core.engine.input.KeyMap;
-import core.game.BaseDumbEnemey;
 import core.game.GameItem;
 import core.game.HealthDrop;
 import core.game.MapHandler;
 import core.game.Mesh;
-import core.game.MovableEntity;
 import core.game.Player;
 import core.game.Shield;
 import core.game.ShieldDrop;
@@ -47,6 +45,7 @@ public class ItemHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		s = new Shield();
 	}
 	
 	public void addItem(GameItem item){
@@ -85,13 +84,7 @@ public class ItemHandler {
 		}
 		
 		if(byby != null) bullets.remove(byby);
-	
-		
-		
-		if (player.hasShield()) {
-			s = new Shield(player.getX(), player.getY(), player);
-		}
-		
+
 		for(GameItem item : queue){
 			items.add(item);
 		}
@@ -106,18 +99,18 @@ public class ItemHandler {
 			program.setUniform("trans", item.getPosMat());
 			item.getMesh().render();
 		}
-		program.setUniform("trans", player.getPosMat());
-		player.getMesh().render();
 				
 		for(bullet b : bullets){
 			program.setUniform("trans", b.getPosMat());
 			b.getMesh().render();
 		}		
 		
+		program.setUniform("trans", player.getPosMat());
 		if (player.hasShield()) {
-			program.setUniform("trans", s.getPosMat());
 			s.getMesh().render();
-		}		
+		} else {
+			player.getMesh().render();
+		}
 	}
 	
 	public void clear(){
@@ -149,14 +142,14 @@ public class ItemHandler {
 	public void kill(GameItem byby) {
 		float lx = byby.getX();
 		float ly = byby.getY();
-		int drop = 16;// r.nextInt(20);
+		int drop = r.nextInt(200);
 		if(drop < 5){
 			items.add(new HealthDrop(lx, ly));
 		} else if(drop < 10){
 			items.add(new ShieldDrop(lx, ly));
-		} else if(drop < 15){
+		} else if(drop < 13){
 			items.add(new ShrinkDrop(lx, ly));
-		} else if(drop == 16){
+		} else if(drop == 18 || drop == 83){
 			if(canTank) items.add(pal = new TankPal(lx, ly));
 			else if(canSea) {
 				items.add(new EkranoPal(lx, ly, pal));

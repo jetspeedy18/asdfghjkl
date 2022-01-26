@@ -1,6 +1,5 @@
 package core.game;
 
-import java.util.Random;
 
 import core.engine.ItemHandler;
 import core.engine.graphics.Texture;
@@ -8,8 +7,6 @@ import core.engine.graphics.Texture;
 public class TankPal extends GameItem{
 
 	private int count;
-
-	private Random r = new Random();
 	
 	public TankPal(float x, float y){
 		mesh = new Mesh(new Texture(Texture.safeLoadTex("res/images/testpanzernobg.png")));
@@ -35,9 +32,14 @@ public class TankPal extends GameItem{
 		
 		count ++;
 		
-		if(count%30==0){
-		//	handler.queAddItem(new bullet(x, y, 1));
+		if(count%45==0){
+			handler.addBullet(new bullet(x, y, (count/45)*19, false));
 		}
+	}
+	
+	@Override
+	public void damage(){
+		health = 100;
 	}
 
 }

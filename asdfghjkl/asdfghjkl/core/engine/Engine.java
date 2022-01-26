@@ -5,7 +5,6 @@ import java.util.Random;
 import core.engine.graphics.Renderer;
 import core.engine.graphics.Window;
 import core.engine.graphics.menus.Menu;
-import core.engine.graphics.menus.Pause;
 import core.engine.graphics.menus.Screen;
 import core.engine.input.KeyMap;
 import core.game.BaseDumbEnemey;
@@ -44,7 +43,7 @@ public class Engine implements Runnable {
 	private endScreen end;
 	private DeathThereGoodSIr death;
 	
-	private int counter = 0;
+	private int counter;
 	
 	public Engine(){
 		keys = new KeyMap();
@@ -55,29 +54,41 @@ public class Engine implements Runnable {
 		
 		r = new Random();
 		
+
+		//screen = null;
+		end = new endScreen();
+		death = new DeathThereGoodSIr();
+		
 		run();
 	}
 
 	
 	public void createNewGame(){
-		//screen = null;
-		end = new endScreen();
-		death = new DeathThereGoodSIr();
-		
-		map = new MapHandler();
-		
-		isPlaying = true;
-		
-		camera = new Camera();
-		handler = new ItemHandler();
-		handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)+1));
-		handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)+1));
-		handler.queAddItem(new BasicStalkerEnemy(2, map.getMapBounds()));
-		try {
-			renderer = new Renderer(camera, handler);
+		if(!isPlaying){
+			map = new MapHandler();
+			map.reset();
 			
-		} catch (Exception e) {
-			e.printStackTrace();
+			isPlaying = true;
+			win = false;
+			dead = false;
+			boss = false;
+			
+			camera = new Camera();
+			handler = new ItemHandler();
+			handler.clear();
+			handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)+1));
+			handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)+1));
+			handler.queAddItem(new BasicStalkerEnemy(2, map.getMapBounds()));
+			try {
+				renderer = new Renderer(camera, handler);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			counter = 0;
+			
+			glClearColor(0.0f,0.0f,0.0f,0.0f);
 		}
 		window.setWindowRes(camera);
 	}
@@ -120,6 +131,10 @@ public class Engine implements Runnable {
 		if(!window.isPaused() && isPlaying){
 			handler.tick(keys, camera, map);
 			dead = handler.isPlayerDeadOrJustInsane();
+			if(dead){
+				glClearColor(0.8f,0.1f,0.1f,0.0f);
+				isPlaying = false;
+			}
 		} else {
 			screen.tick();
 		}
@@ -127,6 +142,10 @@ public class Engine implements Runnable {
 	
 	private void render(){
 
+		if(dead){
+			glClearColor(0.8f,0.1f,0.1f,0.0f);
+		}
+		
 		glClear(GL_COLOR_BUFFER_BIT);
 		
 		if(!win && !dead){
@@ -149,14 +168,14 @@ public class Engine implements Runnable {
 				renderer.unbind();
 				
 				counter++;
-				if(handler.empty()) counter = map.getScale()*map.getScale()*map.getScale()*2 + 1;
-				if(counter > map.getScale()*map.getScale()*map.getScale()*2){
+				if(handler.empty()) counter = map.getScale()*map.getScale()*map.getScale() + 1;
+				if(counter > map.getScale()*map.getScale()*map.getScale()){
 					if(!boss){
 						if(boss = map.advanceLevel()){
 							handler.queAddItem(new Boss());
 						} else {
 							for(int i = 0; i < map.getScale()*map.getScale()/5; i++){
-								if(r.nextInt(15) == 3){
+								if(r.nextInt(10) == 3){
 									handler.queAddItem(new BasicStalkerEnemy(r.nextInt(5)+2,map.getMapBounds()));
 								} else {
 									handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)+1));
@@ -170,14 +189,15 @@ public class Engine implements Runnable {
 				}
 			}
 				
-		} else if (win) {
+		}
+		if (win) {
 			glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 			renderer.bind();
 			renderer.resetUniforms(handler.getPlayer().getPosMat(),end.getScale());
 			end.render();
 			renderer.unbind();
-		} else if(dead) {
-			glClearColor(0.8f,0.1f,0.1f,0.0f);
+		} 
+		if(dead && !isPlaying) {
 			renderer.bind();
 			renderer.resetUniforms(handler.getPlayer().getPosMat(),death.getScale());
 			death.render();
