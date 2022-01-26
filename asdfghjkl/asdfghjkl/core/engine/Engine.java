@@ -59,6 +59,16 @@ public class Engine implements Runnable {
 		end = new endScreen();
 		death = new DeathThereGoodSIr();
 		
+		camera = new Camera();
+		handler = new ItemHandler();
+		
+		try {
+			renderer = new Renderer(camera, handler);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		run();
 	}
 
@@ -178,7 +188,7 @@ public class Engine implements Runnable {
 								if(r.nextInt(10) == 3){
 									handler.queAddItem(new BasicStalkerEnemy(r.nextInt(5)+2,map.getMapBounds()));
 								} else {
-									handler.queAddItem(new BaseDumbEnemey(r.nextInt(20)+1));
+									handler.queAddItem(new BaseDumbEnemey(r.nextInt(40)+1));
 								}
 							}
 						}
