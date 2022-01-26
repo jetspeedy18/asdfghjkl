@@ -74,25 +74,27 @@ public class Player extends MovableEntity {
 		double iny = 0;
 		if(keys.getKeyPos(ACTIONS.MOVE_UP)){
 			iny++;
-			this.dir = 90;
 		}
 		if(keys.getKeyPos(ACTIONS.MOVE_DOWN)){
 			iny--;
-			this.dir = 270;
 		}
 		if(keys.getKeyPos(ACTIONS.MOVE_LEFT)){
 			inx--;
-			this.dir = 180;
 		}
 		if(keys.getKeyPos(ACTIONS.MOVE_RIGHT)){
 			inx++;
-			this.dir = 0;
 		}
 		
 		if(inx != 0 && iny != 0){
 			inx /= Math.sqrt(2);
 			iny /= Math.sqrt(2);
+			
 		}
+		
+		if(inx != 0 || iny != 0){
+			dir = (int) Math.toDegrees(Math.atan2(iny, inx));
+		}
+				
 		
 		x += inx * speedFactor;
 		y += iny * speedFactor;
