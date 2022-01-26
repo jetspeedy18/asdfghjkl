@@ -14,8 +14,10 @@ public class Player extends MovableEntity {
 	private boolean shot;
 	private boolean shotl;
 	private boolean sActive;
+	private static int count;
 	private static int shieldTimer;
 	private static int shieldUses;
+	private static int ammo;
 	private static int cbc;
 	private int shrinkcount;
 
@@ -36,6 +38,7 @@ public class Player extends MovableEntity {
 		health = 169;
 		
 		shieldUses = 3;
+		ammo = 1;
 		cbc=0;
 
 		shrinkcount = 0;
@@ -55,7 +58,16 @@ public class Player extends MovableEntity {
 		return shot;
 	}
 	public int getCBC() {
-		return cbc;
+		return this.cbc;
+	}
+	
+	
+	public void endShot(bullet b){
+		b.setrBullet(false);
+		b.setInMotion(false);
+		cbc--;
+		this.shot = false;
+		
 	}
 	
 	public void detach(){
@@ -72,45 +84,54 @@ public class Player extends MovableEntity {
 		
 		double inx = 0;
 		double iny = 0;
+		int tcbc = cbc;	
 		if(keys.getKeyPos(ACTIONS.MOVE_UP)){
 			iny++;
+			this.dir = 90;
 		}
 		if(keys.getKeyPos(ACTIONS.MOVE_DOWN)){
 			iny--;
+			this.dir = 270;
 		}
 		if(keys.getKeyPos(ACTIONS.MOVE_LEFT)){
 			inx--;
+			this.dir = 180;
 		}
 		if(keys.getKeyPos(ACTIONS.MOVE_RIGHT)){
 			inx++;
+			this.dir = 0;
 		}
 		
 		if(inx != 0 && iny != 0){
 			inx /= Math.sqrt(2);
 			iny /= Math.sqrt(2);
-			
 		}
-		
-		if(inx != 0 || iny != 0){
-			dir = (int) Math.toDegrees(Math.atan2(iny, inx));
-		}
-				
 		
 		x += inx * speedFactor;
 		y += iny * speedFactor;
 		
+
+	
+		this.shot = false;
 		if (keys.getKeyPos(ACTIONS.SPACE_BAR) && !shotl) {
 			this.shot = true;
 			shotl = true;
 			if(cbc < 3){
 				handler.addBullet(new bullet(x, y, dir, true));
+
 				cbc++;
 			}
+
+
 		}
 		else if(!keys.getKeyPos(ACTIONS.SPACE_BAR)){
 			shotl = false;
-			shot = false;
+			this.shot = false;
 		}
+	
+
+		
+		
 		
 		
 		if (shieldTimer>=200) {
@@ -164,19 +185,23 @@ public class Player extends MovableEntity {
 					break;
 				}
 			}
-			if(byby != null) {
-				if(byby.getHealth() <= 0){
-					if(byby instanceof Boss){
-						return true;
-					} else {
-						items.remove(byby);
+				if(byby != null) {
+					if(byby.getHealth() <= 0){
+						if(byby instanceof Boss){
+							return true;
+						} else {
+							items.remove(byby);
+						}
 					}
 				}
 			}
-		}
-		
+		count ++;
 		shieldTimer++;
 		return true;
+			
+			
+		
+	
 	}
 	
 	public boolean isPlayerDeadOrJustInsane(){
@@ -195,4 +220,8 @@ public class Player extends MovableEntity {
 		return speedFactor;
 	}
 
+	public int getAmmo() {
+		return ammo;
+	}
+	
 }
