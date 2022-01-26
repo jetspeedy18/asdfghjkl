@@ -63,6 +63,7 @@ public class Player extends MovableEntity {
 		System.out.println("test");
 		cbc--;
 		this.shot = false;
+		
 	}
 	public boolean hasShield() {
 		return sActive;
@@ -97,11 +98,10 @@ public class Player extends MovableEntity {
 		x += inx * speedFactor;
 		y += iny * speedFactor;
 		
-		if (cbc < 3) {			
+	
 			if (keys.getKeyPos(ACTIONS.SPACE_BAR)) {
 				cbc++;
-				System.out.println(cbc);
-				
+				this.shot = true;
 				ammo++;
 				if (ammo >=4) {
 					ammo = 1;
@@ -111,11 +111,9 @@ public class Player extends MovableEntity {
 			else {
 				this.shot = false;
 			}
-		} 
 		
-		if (tcbc != cbc) {
-			this.shot = true;
-		}
+		
+		
 		
 		if (shieldTimer>=200) {
 			this.sActive = false;
