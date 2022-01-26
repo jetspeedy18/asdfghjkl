@@ -48,6 +48,7 @@ public class bullet extends MovableEntity {
 		this.x = x;
 		this.y = y;
 		this.dir=p.getDir();
+		System.out.println("went");
 	}
 
 	public boolean tick(List<GameItem> items){

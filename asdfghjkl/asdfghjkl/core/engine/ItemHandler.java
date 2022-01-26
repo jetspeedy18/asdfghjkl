@@ -81,6 +81,7 @@ public class ItemHandler {
 					b1.go(player.getX(), player.getY(), player);
 					b1.setInMotion(true);
 				} else { 
+					System.out.println("b");
 					bossKill = b1.tick(items);
 					b1.mapClamp(map);
 					if(b1.kill()){

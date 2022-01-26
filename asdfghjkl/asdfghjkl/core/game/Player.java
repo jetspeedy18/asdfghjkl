@@ -53,6 +53,7 @@ public class Player extends MovableEntity {
 	public void endShot(bullet b){
 		b.setrBullet(false);
 		b.setInMotion(false);
+		this.shot = false;
 	}
 	public boolean hasShield() {
 		return sActive;
