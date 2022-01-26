@@ -16,14 +16,14 @@ public class bullet extends MovableEntity {
 	private boolean inMotion;
 	
 	
-	public bullet(float x, float y, Player p) {
+	public bullet(float x, float y, int dir) {
 		this.mesh = new Mesh(new Texture(Texture.safeLoadTex("res/images/bullet.png")));
 		this.x = x;
 		this.y = y;
 		rot = 0;
 		scale = 1;
 		speedFactor = 20;
-		dir = this.dir=p.getDir();
+		this.dir = dir;
 		inBounds = true;
 		rbullet = false;
 		inMotion = false;
@@ -44,10 +44,10 @@ public class bullet extends MovableEntity {
 		this.y = (float) d;
 	}
 	
-	public void go(float x, float y, Player p) {
+	public void go(float x, float y, int dir) {
 		this.x = x;
 		this.y = y;
-		this.dir=p.getDir();
+		this.dir=dir;
 
 		inMotion = true;
 		done = false;

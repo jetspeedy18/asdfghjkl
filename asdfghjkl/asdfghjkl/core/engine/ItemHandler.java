@@ -47,9 +47,9 @@ public class ItemHandler {
 		clear();
 		try {
 			player = new Player(new Mesh(new Texture(Texture.loadTex("res/images/Rat Knight No Background.png"))));
-			b1 = new bullet(player.getX(), player.getY(), player);
-			b2 = new bullet(player.getX(), player.getY(), player);
-			b3 = new bullet(player.getX(), player.getY(), player);
+			b1 = new bullet(player.getX(), player.getY(), player.getDir());
+			b2 = new bullet(player.getX(), player.getY(), player.getDir());
+			b3 = new bullet(player.getX(), player.getY(), player.getDir());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -90,7 +90,7 @@ public class ItemHandler {
 			
 			if (b1.getrBullet()) {
 				if (!b1.getInMotion()) {
-					b1.go(player.getX(), player.getY(), player);
+					b1.go(player.getX(), player.getY(), player.getDir());
 					b1.setInMotion(true);
 				} else { 
 					bossKill = b1.tick(items, this);
@@ -102,7 +102,7 @@ public class ItemHandler {
 			}
 			else if (b2.getrBullet()) {
 				if (!b2.getInMotion()) {
-					b2.go(player.getX(), player.getY(), player);
+					b2.go(player.getX(), player.getY(), player.getDir());
 					b2.setInMotion(true);
 				} else { 
 					bossKill = b2.tick(items, this);
@@ -114,7 +114,7 @@ public class ItemHandler {
 			}
 			else if (b3.getrBullet()) {
 				if (!b3.getInMotion()) {
-					b3.go(player.getX(), player.getY(), player);
+					b3.go(player.getX(), player.getY(), player.getDir());
 					b3.setInMotion(true);
 				} else { 
 					bossKill = b3.tick(items, this);

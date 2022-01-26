@@ -1,16 +1,23 @@
 package core.game;
 
+import java.util.Random;
+
 import core.engine.ItemHandler;
 import core.engine.graphics.Texture;
 
 public class TankPal extends GameItem{
 
+	private int count;
+
+	private Random r = new Random();
+	
 	public TankPal(float x, float y){
 		mesh = new Mesh(new Texture(Texture.safeLoadTex("res/images/testpanzernobg.png")));
 		this.x = x;
 		this.y = y;
 		rot = 0;
 		scale = 1;
+		count = 0;
 		
 	}
 	
@@ -24,6 +31,12 @@ public class TankPal extends GameItem{
 		if(ispify > 100){
 			x -= difX/ispify*9;
 			y -= difY/ispify*7;
+		}
+		
+		count ++;
+		
+		if(count%30==0){
+		//	handler.queAddItem(new bullet(x, y, 1));
 		}
 	}
 
