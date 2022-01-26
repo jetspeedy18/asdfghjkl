@@ -12,6 +12,7 @@ import core.game.BasicStalkerEnemy;
 import core.game.Boss;
 import core.game.DeathThereGoodSIr;
 import core.game.MapHandler;
+import core.game.TitleScreen;
 import core.game.endScreen;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -36,12 +37,14 @@ public class Engine implements Runnable {
 	
 	private boolean isPlaying = false;
 	
+	private boolean tScreen = true;
 	private boolean win = false;
 	private boolean boss = false;
 	private boolean dead = false;
 	
 	private endScreen end;
 	private DeathThereGoodSIr death;
+	private TitleScreen title;
 	
 	private int counter;
 	
@@ -51,6 +54,10 @@ public class Engine implements Runnable {
 		window.BindKeys(keys);
 		
 		screen = new Menu(this);
+		
+		
+		title = new TitleScreen();
+		
 		
 		r = new Random();
 		
@@ -69,6 +76,8 @@ public class Engine implements Runnable {
 			e.printStackTrace();
 		}
 		
+		glClearColor(0.0f,0.0f,0.0f,0.0f);
+		window.setWindowRes(camera);
 		run();
 	}
 
@@ -82,6 +91,7 @@ public class Engine implements Runnable {
 			win = false;
 			dead = false;
 			boss = false;
+			tScreen = false;
 			
 			camera = new Camera();
 			handler = new ItemHandler();
@@ -158,6 +168,14 @@ public class Engine implements Runnable {
 		
 		glClear(GL_COLOR_BUFFER_BIT);
 		
+		if (tScreen) {
+			glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+			renderer.bind();
+			renderer.resetUniforms(handler.getPlayer().getPosMat(),title.getScale());
+			title.render();
+			renderer.unbind();
+		} 
+		
 		if(!win && !dead){
 			if(isPlaying){
 				renderer.bind();
@@ -213,6 +231,7 @@ public class Engine implements Runnable {
 			death.render();
 			renderer.unbind();
 		}
+
 		
 		//if(window.isPaused() || !isPlaying) screen.render();
 
