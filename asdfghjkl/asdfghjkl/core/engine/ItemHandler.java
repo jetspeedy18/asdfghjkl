@@ -80,8 +80,7 @@ public class ItemHandler {
 				if (!b1.getInMotion()) {
 					b1.go(player.getX(), player.getY(), player);
 					b1.setInMotion(true);
-				} 
-				if (b1.getInMotion()){ 
+				} else { 
 					bossKill = b1.tick(items);
 					b1.mapClamp(map);
 					if(b1.kill()){
@@ -93,8 +92,7 @@ public class ItemHandler {
 				if (!b2.getInMotion()) {
 					b2.go(player.getX(), player.getY(), player);
 					b2.setInMotion(true);
-				} 
-				if (b2.getInMotion()) { 
+				} else { 
 					bossKill = b2.tick(items);
 					b2.mapClamp(map);
 					if(b2.kill()){
@@ -106,8 +104,7 @@ public class ItemHandler {
 				if (!b3.getInMotion()) {
 					b3.go(player.getX(), player.getY(), player);
 					b3.setInMotion(true);
-				} 
-				if (b3.getInMotion()) { 
+				} else { 
 					bossKill = b3.tick(items);
 					b3.mapClamp(map);
 					if(b3.kill()){
