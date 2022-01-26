@@ -110,29 +110,28 @@ public class Player extends MovableEntity {
 		x += inx * speedFactor;
 		y += iny * speedFactor;
 		
-<<<<<<< HEAD
+
 	
 			this.shot = false;
 			if (keys.getKeyPos(ACTIONS.SPACE_BAR) && !shotl) {
-=======
+
 		if (keys.getKeyPos(ACTIONS.SPACE_BAR) && !shotl) {
 			this.shot = true;
 			shotl = true;
 			if(cbc < 3){
 				handler.addBullet(new bullet(x, y, dir, true));
->>>>>>> 32e204437e8b748c01a4d15fa879a4000a8db0f4
+
 				cbc++;
 			}
-<<<<<<< HEAD
-		
-=======
+
+
 		}
 		else if(!keys.getKeyPos(ACTIONS.SPACE_BAR)){
 			shotl = false;
 			this.shot = false;
 		}
 	
->>>>>>> 32e204437e8b748c01a4d15fa879a4000a8db0f4
+
 		
 		
 		
@@ -198,10 +197,13 @@ public class Player extends MovableEntity {
 				}
 			}
 		}
-		
+			}
 		count ++;
 		shieldTimer++;
 		return true;
+			
+		
+	
 	}
 	
 	public boolean isPlayerDeadOrJustInsane(){
