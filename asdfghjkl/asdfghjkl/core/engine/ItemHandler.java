@@ -47,6 +47,7 @@ public class ItemHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		s = new Shield();
 	}
 	
 	public void addItem(GameItem item){
@@ -85,13 +86,7 @@ public class ItemHandler {
 		}
 		
 		if(byby != null) bullets.remove(byby);
-	
-		
-		
-		if (player.hasShield()) {
-			s = new Shield(player.getX(), player.getY(), player);
-		}
-		
+
 		for(GameItem item : queue){
 			items.add(item);
 		}
@@ -106,18 +101,18 @@ public class ItemHandler {
 			program.setUniform("trans", item.getPosMat());
 			item.getMesh().render();
 		}
-		program.setUniform("trans", player.getPosMat());
-		player.getMesh().render();
 				
 		for(bullet b : bullets){
 			program.setUniform("trans", b.getPosMat());
 			b.getMesh().render();
 		}		
 		
+		program.setUniform("trans", player.getPosMat());
 		if (player.hasShield()) {
-			program.setUniform("trans", s.getPosMat());
 			s.getMesh().render();
-		}		
+		} else {
+			player.getMesh().render();
+		}
 	}
 	
 	public void clear(){
