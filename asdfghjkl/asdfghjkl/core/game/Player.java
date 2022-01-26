@@ -16,6 +16,7 @@ public class Player extends MovableEntity {
 	private static int shieldTimer;
 	private static int shieldUses;
 	private static int ammo;
+	private static int cbc;
 
 	public Player(Mesh mesh){
 		this.mesh = mesh;
@@ -31,8 +32,10 @@ public class Player extends MovableEntity {
 		sActive = false;
 
 		health = 169;
+		
 		shieldUses = 3;
 		ammo = 1;
+		cbc=0;
 
 	}
 	
@@ -49,10 +52,16 @@ public class Player extends MovableEntity {
 	public boolean hasShot() {
 		return shot;
 	}
+	public int getCBC() {
+		return this.cbc;
+	}
+	
 	
 	public void endShot(bullet b){
 		b.setrBullet(false);
 		b.setInMotion(false);
+		System.out.println("test");
+		cbc--;
 		this.shot = false;
 	}
 	public boolean hasShield() {
@@ -62,6 +71,7 @@ public class Player extends MovableEntity {
 	public boolean tick(KeyMap keys, List<GameItem> items){
 		double inx = 0;
 		double iny = 0;
+		int tcbc = cbc;	
 		if(keys.getKeyPos(ACTIONS.MOVE_UP)){
 			iny++;
 			this.dir = 90;
@@ -87,16 +97,24 @@ public class Player extends MovableEntity {
 		x += inx * speedFactor;
 		y += iny * speedFactor;
 		
-		if (count>=50) {
-			this.shot = false;
+		if (cbc < 3) {			
 			if (keys.getKeyPos(ACTIONS.SPACE_BAR)) {
-				this.shot = true;
+				cbc++;
+				System.out.println(cbc);
+				
 				ammo++;
 				if (ammo >=4) {
 					ammo = 1;
 				}
 				count=0;
 			}
+			else {
+				this.shot = false;
+			}
+		} 
+		
+		if (tcbc != cbc) {
+			this.shot = true;
 		}
 		
 		if (shieldTimer>=200) {
@@ -145,7 +163,6 @@ public class Player extends MovableEntity {
 	
 	public int getHealth(){
 		return health;
-
 	}
 	
 	public int getShields() {

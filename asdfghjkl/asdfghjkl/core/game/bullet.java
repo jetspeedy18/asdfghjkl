@@ -49,8 +49,6 @@ public class bullet extends MovableEntity {
 		this.y = y;
 		this.dir=p.getDir();
 
-		System.out.println("went");
-
 		inMotion = true;
 		done = false;
 
