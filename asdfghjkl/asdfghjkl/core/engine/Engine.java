@@ -149,7 +149,7 @@ public class Engine implements Runnable {
 				renderer.unbind();
 				
 				counter++;
-				if(counter > map.getScale()*map.getScale()*map.getScale()*3){
+				if(counter > map.getScale()*map.getScale()*map.getScale()*2){
 					if(!boss){
 						if(boss = map.advanceLevel()){
 							handler.queAddItem(new Boss());
@@ -162,9 +162,10 @@ public class Engine implements Runnable {
 								}
 							}
 						}
-					} else {
-						win = handler.bossKill();
 					}
+				}
+				if(boss){
+					win = handler.bossKill();
 				}
 			}
 				
