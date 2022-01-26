@@ -1,6 +1,5 @@
 package core.game;
 
-import java.util.Random;
 
 import core.engine.ItemHandler;
 import core.engine.graphics.Texture;

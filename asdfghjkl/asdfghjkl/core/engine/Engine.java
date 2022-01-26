@@ -5,7 +5,6 @@ import java.util.Random;
 import core.engine.graphics.Renderer;
 import core.engine.graphics.Window;
 import core.engine.graphics.menus.Menu;
-import core.engine.graphics.menus.Pause;
 import core.engine.graphics.menus.Screen;
 import core.engine.input.KeyMap;
 import core.game.BaseDumbEnemey;

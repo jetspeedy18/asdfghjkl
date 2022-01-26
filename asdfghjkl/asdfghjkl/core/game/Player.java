@@ -14,10 +14,8 @@ public class Player extends MovableEntity {
 	private boolean shot;
 	private boolean shotl;
 	private boolean sActive;
-	private static int count;
 	private static int shieldTimer;
 	private static int shieldUses;
-	private static int ammo;
 	private static int cbc;
 	private int shrinkcount;
 
@@ -38,7 +36,6 @@ public class Player extends MovableEntity {
 		health = 169;
 		
 		shieldUses = 3;
-		ammo = 1;
 		cbc=0;
 
 		shrinkcount = 0;
@@ -58,7 +55,7 @@ public class Player extends MovableEntity {
 		return shot;
 	}
 	public int getCBC() {
-		return this.cbc;
+		return cbc;
 	}
 	
 	public void detach(){
@@ -75,7 +72,6 @@ public class Player extends MovableEntity {
 		
 		double inx = 0;
 		double iny = 0;
-		int tcbc = cbc;	
 		if(keys.getKeyPos(ACTIONS.MOVE_UP)){
 			iny++;
 			this.dir = 90;
@@ -180,7 +176,6 @@ public class Player extends MovableEntity {
 			}
 		}
 		
-		count ++;
 		shieldTimer++;
 		return true;
 	}
@@ -201,8 +196,4 @@ public class Player extends MovableEntity {
 		return speedFactor;
 	}
 
-	public int getAmmo() {
-		return ammo;
-	}
-	
 }
