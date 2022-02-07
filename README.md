@@ -1,6 +1,11 @@
 # Archibalds Dungon
 ### (c) 2022 Brendan, Aidan, Nam, Marlyn
 
+## how to play
+WASD to move
+space to shoot
+f to shield
+
 
 ## How to run
 
