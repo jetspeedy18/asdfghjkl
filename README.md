@@ -13,6 +13,8 @@ Set up with library in editor ( eclipse has been tested but any should work )
 requires LWJGL with JOML, can be found here:  
 https://www.lwjgl.org/customize
 
+Other note: the run setup should be the file Core.java (its our main file) and run as java application
+
 
 ### To set up library with eclipse
 
